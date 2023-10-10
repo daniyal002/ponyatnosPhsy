@@ -8,7 +8,8 @@ const Registration = () => {
   const { mutate, error } = useRegistration();
 
   const registration = (data) => {
-    mutate(data);
+    const body = { ...data, DateOfBirth: '2023-10-10T20:37:07.478Z' };
+    mutate(body);
     setTimeout(() => {
       console.log(error);
     }, 1000);
@@ -33,7 +34,7 @@ const Registration = () => {
           {...register('RegisterLastName')}
           placeholder="LastName"
         />
-        <input type="date" {...register('DateOfBirth')} />
+        {/* <input type="datetime-local" {...register('DateOfBirth')} /> */}
 
         <input type="radio" value="Мужчина" id="male" {...register('Gender')} />
         <label htmlFor="male">Мужчина</label>
