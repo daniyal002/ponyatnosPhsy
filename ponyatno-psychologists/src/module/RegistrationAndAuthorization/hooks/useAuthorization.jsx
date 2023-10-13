@@ -1,14 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { auth } from "../services/Authorization.service";
-import { useState } from "react";
 
 export const useAuthorization = () => {
-  const [error, setError] = useState("");
+  const { fetchData, error } = auth();
 
-  const { mutate } = useMutation(["Registration"], (body) => auth(body), {
-    onError: (error) => {
-      setError(error);
-    },
-  });
+  const { mutate } = useMutation(["Authorization"], (body) => fetchData(body));
   return { mutate, error };
 };

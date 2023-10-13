@@ -1,12 +1,10 @@
 import "./App.css";
-import Authorization from "./module/RegistrationAndAuthorization/components/Authorization/Authorization";
-import Registration from "./module/RegistrationAndAuthorization/components/Registration/Registration";
+import RegistrationAndAuthorization from "./module/RegistrationAndAuthorization/RegistrationAndAuthorization";
 
 function App() {
   return (
     <>
-      {/* <Registration /> */}
-      <Authorization />
+      <RegistrationAndAuthorization />
     </>
   );
 }

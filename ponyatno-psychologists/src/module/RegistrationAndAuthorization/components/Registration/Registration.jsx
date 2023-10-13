@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { useRegistration } from "../../hooks/useRegistration";
+import { isPasswordValid } from "../../help/ValidatePassword";
 
 const Registration = ({ role }) => {
   const [selectedGender, setSelectedGender] = useState("male");
@@ -8,15 +9,17 @@ const Registration = ({ role }) => {
     setSelectedGender(gender);
   };
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
   const { mutate, error } = useRegistration();
 
   const registration = (data) => {
-    const body = { ...data, userRole: role };
+    const body = { ...data, userRole: "User" };
     mutate(body);
-    setTimeout(() => {
-      console.log(error);
-    }, 1000);
   };
 
   return (
@@ -46,15 +49,23 @@ const Registration = ({ role }) => {
         />
 
         <label htmlFor="RegisterPassword">Пароль: </label>
-
-        <input
+        <Controller
           name="RegisterPassword"
-          type="password"
-          {...register("RegisterPassword")}
-          placeholder="Придумайте Пароль"
-          className="input-text"
-          required={true}
+          control={control}
+          defaultValue=""
+          rules={{ validate: isPasswordValid }}
+          render={({ field }) => (
+            <input
+              {...field}
+              type="password"
+              placeholder="Придумайте Пароль"
+              className="input-text"
+            />
+          )}
         />
+        {errors.RegisterPassword && (
+          <p className="text-red-600">{errors.RegisterPassword.message}</p>
+        )}
 
         <label htmlFor="RegisterFirstName">Имя: </label>
         <input
@@ -139,7 +150,11 @@ const Registration = ({ role }) => {
         >
           Зарегистрироваться
         </button>
-        {error}
+        {error && (
+          <p className="text-white p-3 rounded-lg text-xl bg-red-600 text-center">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );

@@ -7,10 +7,7 @@ const Authorization = () => {
   const { mutate, error } = useAuthorization();
 
   const authorization = (data) => {
-    mutate(data);
-    setTimeout(() => {
-      console.log(error);
-    }, 1000);
+    mutate({ ...data, loginEmail: "" });
   };
 
   return (
@@ -30,15 +27,6 @@ const Authorization = () => {
           required={true}
         />
 
-        <label htmlFor="LoginEmail">E-mail: </label>
-        <input
-          type="email"
-          {...register("LoginEmail")}
-          className="input-text"
-          placeholder="Введите ваш E-mail"
-          required={true}
-        />
-
         <label htmlFor="LoginPassword">Пароль: </label>
         <input
           type="password"
@@ -53,7 +41,12 @@ const Authorization = () => {
         >
           Войти
         </button>
-        {error}
+        {error && (
+          <p className="text-white p-3 rounded-lg text-xl bg-red-600 text-center">
+            {error}
+          </p>
+        )}
+        {token}
       </form>
     </div>
   );
