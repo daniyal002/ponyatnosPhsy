@@ -46,7 +46,6 @@ const Authorization = () => {
             {error}
           </p>
         )}
-        {token}
       </form>
     </div>
   );
