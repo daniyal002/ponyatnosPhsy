@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useRegistration } from "../../hooks/useRegistration";
 import { isPasswordValid } from "../../help/ValidatePassword";
