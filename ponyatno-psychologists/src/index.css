@@ -6,6 +6,9 @@
   .input-text {
     @apply p-3 border-b-4 rounded-lg border-white outline-none transition   focus:border-green-pon focus:transition focus:duration-700;
   }
+  .profile-text {
+    @apply bg-white p-3 rounded-lg  text-xl w-3/4 flex gap-y-6 flex-col items-center;
+  }
 }
 
 * {

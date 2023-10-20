@@ -2,17 +2,19 @@ import axios from 'axios';
 import { useState } from 'react';
 import useTokenStore from '../../../store/store';
 
-export const auth = () => {
+export const UpdatetProfileById = () => {
   const [error, setError] = useState();
-  const { setToken, token } = useTokenStore();
+  const { token } = useTokenStore();
 
   const fetchData = (body) =>
     axios
-      .post('http://212.118.52.175:8080/api/account/login', body)
+      .post('http://212.118.52.175:8080/api/Profile/UpdateProfile', body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
-        response.data;
-        setToken(response.data.token);
-        setError();
+        return response.data;
       })
       .catch((error) => {
         console.log(error.response.data);

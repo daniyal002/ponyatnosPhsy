@@ -1,26 +1,97 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-
+import React, { useState } from 'react';
+import { useGetProfileById } from '../../hook/useGetProfileById';
+import ProfileDataUpdate from './ProfileDataUpdate/ProfileDataUpdate';
 const ProfileData = () => {
-  const { register, handleSubmit } = useForm();
-  const updateProfile = (body) => {
-    console.log(body);
+  const { data } = useGetProfileById();
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => {
+    setModalOpen(true);
   };
 
   return (
-    <div>
-      <form onChange={handleSubmit(updateProfile)}>
-        <input type="tel" placeholder="Телефон" />
-        <input type="textarea" placeholder="О себе" />
-        <input type="textarea" placeholder="Что получит пациент после сеанса" />
-        <input
-          type="number"
-          placeholder="Сколько лет вы работаете как психолог"
-        />
-        <input type="text" placeholder="Образование" />
-        <input type="text" placeholder="Дипломы и сертификаты" />
-      </form>
-    </div>
+    <>
+      {data && (
+        <>
+          <ProfileDataUpdate
+            isModalOpen={isModalOpen}
+            setModalOpen={setModalOpen}
+          />
+          <div className="flex flex-col justify-center items-center w-1/2 min-h-screen gap-y-3">
+            <button
+              onClick={openModal}
+              className="bg-white p-4 rounded-lg text-green-pon uppercase font-bold hover:bg-[#0da47c;] hover:text-white duration-700"
+            >
+              Редактировать профиль
+            </button>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Имя</span>
+              <span>{data.firstName} </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Фамилиия</span>{' '}
+              <span>{data.lastName} </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">E-mail</span>{' '}
+              <span>{data.email} </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Телефон</span>{' '}
+              <span>{data.phoneNumber} </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Год рождения</span>{' '}
+              <span>{data.dateOfBirth.split('T')[0]} </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">О себе</span>{' '}
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
+                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
+                autem quae dicta facere dolor. Quos deserunt saepe non quia.
+                Odit, iste?{' '}
+              </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">
+                Что получит пациент после сеанса
+              </span>{' '}
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
+                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
+                autem quae dicta facere dolor. Quos deserunt saepe non quia.
+                Odit, iste?{' '}
+              </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Опыт работы</span>{' '}
+              <span>7 лет </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">Образование</span>{' '}
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
+                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
+                autem quae dicta facere dolor. Quos deserunt saepe non quia.
+                Odit, iste?{' '}
+              </span>
+            </p>
+            <p className="profile-text">
+              <span className="text-green-pon font-semibold">
+                Дипломы и сертификаты
+              </span>{' '}
+              <span>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
+                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
+                autem quae dicta facere dolor. Quos deserunt saepe non quia.
+                Odit, iste?{' '}
+              </span>
+            </p>
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
