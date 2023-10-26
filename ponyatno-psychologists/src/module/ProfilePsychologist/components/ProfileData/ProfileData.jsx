@@ -38,7 +38,7 @@ const ProfileData = () => {
             </p>
             <p className="profile-text">
               <span className="text-green-pon font-semibold">Телефон</span>{' '}
-              <span>{data.phoneNumber} </span>
+              <span>{data.phone} </span>
             </p>
             <p className="profile-text">
               <span className="text-green-pon font-semibold">Год рождения</span>{' '}
@@ -46,47 +46,25 @@ const ProfileData = () => {
             </p>
             <p className="profile-text">
               <span className="text-green-pon font-semibold">О себе</span>{' '}
-              <span>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
-                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
-                autem quae dicta facere dolor. Quos deserunt saepe non quia.
-                Odit, iste?{' '}
-              </span>
+              <span>{data.aboutMe}</span>
             </p>
             <p className="profile-text">
               <span className="text-green-pon font-semibold">
                 Что получит пациент после сеанса
               </span>{' '}
-              <span>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
-                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
-                autem quae dicta facere dolor. Quos deserunt saepe non quia.
-                Odit, iste?{' '}
-              </span>
+              <span>{data.sessionFeedback}</span>
             </p>
             <p className="profile-text">
               <span className="text-green-pon font-semibold">Опыт работы</span>{' '}
-              <span>7 лет </span>
+              <span>{data.yearsOfExperience} </span>
             </p>
             <p className="profile-text">
-              <span className="text-green-pon font-semibold">Образование</span>{' '}
-              <span>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
-                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
-                autem quae dicta facere dolor. Quos deserunt saepe non quia.
-                Odit, iste?{' '}
-              </span>
+              <span className="text-green-pon font-semibold">Место учебы</span>{' '}
+              <span>{data.educationPlace}</span>
             </p>
             <p className="profile-text">
-              <span className="text-green-pon font-semibold">
-                Дипломы и сертификаты
-              </span>{' '}
-              <span>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil,
-                dolor. Adipisci, ea, accusamus iure sapiente, est nisi natus
-                autem quae dicta facere dolor. Quos deserunt saepe non quia.
-                Odit, iste?{' '}
-              </span>
+              <span className="text-green-pon font-semibold">Год выпуска</span>{' '}
+              <span>{data.yearOfGraduation}</span>
             </p>
           </div>
         </>
