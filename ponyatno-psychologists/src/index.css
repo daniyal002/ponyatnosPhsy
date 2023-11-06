@@ -9,6 +9,13 @@
   .profile-text {
     @apply bg-white p-3 rounded-lg  text-xl w-3/4 flex gap-y-6 flex-col items-center;
   }
+  .btn-default {
+    @apply mb-5 bg-white p-4 rounded-lg text-green-pon uppercase font-bold;
+  }
+
+  .btn-default:hover {
+    @apply bg-[#0da47c]  text-white duration-700;
+  }
 }
 
 * {

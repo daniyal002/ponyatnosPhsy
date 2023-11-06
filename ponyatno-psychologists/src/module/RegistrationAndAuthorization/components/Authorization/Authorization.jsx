@@ -1,13 +1,17 @@
-import React from "react";
-import { useForm } from "react-hook-form";
-import { useAuthorization } from "../../hooks/useAuthorization";
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { useAuthorization } from '../../hooks/useAuthorization';
 
 const Authorization = () => {
   const { register, handleSubmit } = useForm();
-  const { mutate, error } = useAuthorization();
+  const { mutate, error, status } = useAuthorization();
+
+  useEffect(() => {
+    console.log(status);
+  }, []);
 
   const authorization = (data) => {
-    mutate({ ...data, loginEmail: "" });
+    mutate({ ...data, loginEmail: '' });
   };
 
   return (
@@ -21,7 +25,7 @@ const Authorization = () => {
         <label htmlFor="LoginName">Логин: </label>
         <input
           type="text"
-          {...register("LoginName")}
+          {...register('LoginName')}
           className="input-text"
           placeholder="Введите ваш логин"
           required={true}
@@ -30,7 +34,7 @@ const Authorization = () => {
         <label htmlFor="LoginPassword">Пароль: </label>
         <input
           type="password"
-          {...register("LoginPassword")}
+          {...register('LoginPassword')}
           className="input-text"
           placeholder="Введите ваш пароль"
           required={true}

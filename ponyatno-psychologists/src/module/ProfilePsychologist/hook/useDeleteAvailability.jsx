@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UpdatetProfileById } from '../services/UpdatetProfileById.service';
+import { DeleteAvailability } from '../services/DeleteAvailability.service';
 import { useState } from 'react';
 
-export const useUpdatetProfileById = () => {
+export const useDeleteAvailability = () => {
   const queryClient = useQueryClient();
   const [error, setError] = useState();
 
   const refreshData = () => {
-    queryClient.invalidateQueries('useGetProfileById');
+    queryClient.invalidateQueries('useGetAvailability');
   };
 
   const { mutate } = useMutation(
-    ['useUpdatetProfileById'],
-    (body) => UpdatetProfileById(body),
+    ['useDeleteAvailability'],
+    (body) => DeleteAvailability(body),
     {
       onSuccess: () => {
         setError();

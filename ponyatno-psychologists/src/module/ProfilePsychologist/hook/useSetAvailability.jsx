@@ -1,22 +1,22 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UpdatetProfileById } from '../services/UpdatetProfileById.service';
+import { SetAvailability } from '../services/SetAvailability.service';
 import { useState } from 'react';
 
-export const useUpdatetProfileById = () => {
+export const useSetAvailability = () => {
   const queryClient = useQueryClient();
   const [error, setError] = useState();
 
   const refreshData = () => {
-    queryClient.invalidateQueries('useGetProfileById');
+    queryClient.invalidateQueries('useGetAvailability');
   };
 
   const { mutate } = useMutation(
-    ['useUpdatetProfileById'],
-    (body) => UpdatetProfileById(body),
+    ['useSetAvailability'],
+    (body) => fetchData(body),
     {
       onSuccess: () => {
-        setError();
         refreshData();
+        setError();
       },
       onError: (error) => {
         setError(error.response?.data?.message);

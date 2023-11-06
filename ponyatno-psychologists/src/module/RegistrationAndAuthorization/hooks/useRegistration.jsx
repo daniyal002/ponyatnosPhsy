@@ -1,14 +1,20 @@
-import { useMutation } from "@tanstack/react-query";
-import { reg } from "../services/Registration.service";
+import { useMutation } from '@tanstack/react-query';
+import reg from '../services/Registration.service';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export const useRegistration = () => {
-  const { fetchData, error } = reg();
+  const [error, setError] = useState();
 
-  const { mutate } = useMutation(["registration"], (body) => fetchData(body), {
+  const navigate = useNavigate();
+
+  const { mutate } = useMutation(['Registration'], (body) => reg(body), {
     onSuccess: () => {
-      console.log("s");
+      navigate('/auth/reg');
+    },
+    onError: (error) => {
+      setError(error.response?.data?.message);
     },
   });
-
   return { mutate, error };
 };
