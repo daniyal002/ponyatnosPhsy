@@ -1,18 +1,17 @@
-import axios from 'axios';
-import useTokenStore from '../../../store/store';
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+axios.defaults.baseURL = "http://212.118.52.175:8080";
 
 const GetAllPsychologist = async () => {
-  const { token } = useTokenStore();
-
   return axios
-    .get('http://212.118.52.175:8080/api/Profile/GetAllPsychologist', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    .get("/api/Profile/GetAllPsychologist", {
+      headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      response.data;
+      return response.data.$values;
     });
 };
 
-export default GetAllPsychologist;
+export { GetAllPsychologist };

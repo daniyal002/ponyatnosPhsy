@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import Calendar from '../../ProfilePsychologist/components/Calendar/Calendar';
+import React, { useState } from "react";
+import Calendar from "../../ProfilePsychologist/components/Calendar/Calendar";
 
-const PsychologistItem = () => {
+const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
 
   return (
@@ -16,20 +16,29 @@ const PsychologistItem = () => {
         </div>
 
         <div>
-          <Calendar />
+          <Calendar
+            availability={info.psychologistAvailability.$values}
+            breakDuration={info.breakDuration}
+            sessionDuration={info.sessionDuration}
+          />
         </div>
       </div>
 
       <div className="w-[400px]">
         <div className="flex flex-col gap-y-4">
           <div>
-            <p className="text-3xl font-semibold">Фамилиия Имя</p>
+            {info.user && (
+              <div className="flex gap-x-4">
+                <p className="text-3xl font-semibold">{info.user.firstName}</p>
+                <p className="text-3xl font-semibold">{info.user.lastName}</p>
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-y-2 max-w-[600px]">
             <h6 className="text-[26px]">О психологе</h6>
             <div className="flex gap-x-8 justify-start">
               <p className=" text-[18px] font-bold text-green-pon">
-                5 лет опыта
+                {info.yearsOfExperience} лет опыта
               </p>
               <p className=" text-[18px] font-bold text-green-pon">
                 Диплом психолога
@@ -70,22 +79,12 @@ const PsychologistItem = () => {
           <div className="flex flex-col gap-y-5">
             <div className="flex flex-col gap-y-3">
               <h6 className="text-[26px]">О себе</h6>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo
-                esse ullam molestiae at ea repellendus amet nihil voluptatem
-                debitis error mollitia, corrupti facere alias aliquam dolores
-                quis maiores! Optio, iste!
-              </p>
+              <p>{info.aboutMe}</p>
             </div>
 
             <div className="flex flex-col gap-y-3">
               <h6 className="text-[26px]">Что даст сеанс</h6>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Molestiae, assumenda. Aspernatur, sequi iusto repellendus non
-                possimus blanditiis voluptatem laudantium sapiente libero magni!
-                Nobis nostrum deserunt quod sint itaque provident. Eveniet.
-              </p>
+              <p>{info.sessionFeedback}</p>
             </div>
 
             <div className="flex flex-col gap-y-3">

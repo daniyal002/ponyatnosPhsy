@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { registerLocale } from 'react-datepicker';
-import ru from 'date-fns/locale/ru';
-import { addDays } from 'date-fns';
-import { useGetAvailability } from '../../hook/useGetAvailability';
+import React, { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale } from "react-datepicker";
+import ru from "date-fns/locale/ru";
+import { addDays } from "date-fns";
 
-registerLocale('ru', ru);
+registerLocale("ru", ru);
 
-const Calendar = () => {
-  const { data } = useGetAvailability();
-
+const Calendar = ({ availability, breakDuration, sessionDuration }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
+  const [timeInterval, setTimeInterval] = useState(60);
+
+  useEffect(() => {
+    console.log(breakDuration, sessionDuration);
+    const intBreakDuration = Number(breakDuration);
+    const intSessionDuration = Number(sessionDuration);
+    const summTimeInterval = intBreakDuration + intSessionDuration;
+    setTimeInterval(summTimeInterval);
+  }, []);
 
   const isWeekend = (date) => {
     const day = date.getDay();
-    const dayOfWeek = data && data.map((day) => day.dayOfWeek);
+    const dayOfWeek = availability && availability.map((day) => day.dayOfWeek);
     return dayOfWeek && !dayOfWeek.includes(day);
   };
 
@@ -40,7 +46,7 @@ const Calendar = () => {
   };
 
   const filterPassedTime = (time) => {
-    if (!selectedDate || !data) return false; // Проверяем, что selectedDate и data определены
+    if (!selectedDate || !availability) return false; // Проверяем, что selectedDate и availability определены
 
     const currentDate = new Date();
     const selectedDateWithoutTime = new Date(selectedDate);
@@ -50,7 +56,7 @@ const Calendar = () => {
     const hours = selectedDateWithoutTime.getHours();
 
     // Проверяем, что текущий день входит в dayOfWeek из данных доступности
-    const dayOfWeek = data.map((day) => day.dayOfWeek);
+    const dayOfWeek = availability.map((day) => day.dayOfWeek);
     const isWorkingDay = dayOfWeek.includes(day);
 
     // Устанавливаем рабочее время для понедельника (или другого дня) здесь
@@ -64,17 +70,17 @@ const Calendar = () => {
       6: [],
     };
 
-    data.forEach((item) => {
+    availability.forEach((item) => {
       if (item.dayOfWeek in workingHoursByDay) {
         workingHoursByDay[item.dayOfWeek].push({
-          startTime: parseInt(item.startTime.split(':')[0]),
-          endTime: parseInt(item.endTime.split(':')[0]),
+          startTime: parseInt(item.startTime.split(":")[0]),
+          endTime: parseInt(item.endTime.split(":")[0]),
         });
       }
     });
 
     console.log(workingHoursByDay);
-    if (data) {
+    if (availability) {
       const workingHours = workingHoursByDay[day];
 
       return (
@@ -129,11 +135,13 @@ const Calendar = () => {
             showTimeSelect
             showTimeSelectOnly
             dateFormat="HH:mm"
+            timeIntervals={timeInterval}
             locale="ru"
             timeCaption="Начало"
             shouldCloseOnSelect={false}
             calendarStartDay={1}
             placeholderText="Начало"
+            t
             className="p-1 rounded-lg bg-green-pon placeholder:text-white outline-none text-white text-center "
           />
           -

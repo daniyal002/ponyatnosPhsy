@@ -1,11 +1,12 @@
-import axios from 'axios';
-import useTokenStore from '../../../store/store';
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+axios.defaults.baseURL = "http://212.118.52.175:8080";
 
 const UpdatetProfileById = async (body) => {
-  const { token } = useTokenStore();
-
   return axios
-    .post('http://212.118.52.175:8080/api/Profile/UpdateProfile', body, {
+    .post("/api/Profile/UpdateProfile", body, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -15,4 +16,4 @@ const UpdatetProfileById = async (body) => {
     });
 };
 
-export default UpdatetProfileById;
+export { UpdatetProfileById };

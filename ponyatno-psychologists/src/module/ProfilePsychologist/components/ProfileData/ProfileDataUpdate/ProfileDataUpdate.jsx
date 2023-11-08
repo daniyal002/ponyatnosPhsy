@@ -1,19 +1,23 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useGetProfileById } from '../../../hook/useGetProfileById';
-import { useUpdatetProfileById } from '../../../hook/useUpdatetProfileById';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useGetProfileById } from "../../../hook/useGetProfileById";
+import { useUpdatetProfileById } from "../../../hook/useUpdatetProfileById";
 
 const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
   const { data } = useGetProfileById();
   const { mutate, error } = useUpdatetProfileById();
-  const [selectedGender, setSelectedGender] = useState('male');
-  const handleGenderChange = (gender) => {
-    setSelectedGender(gender);
-  };
 
   const { register, handleSubmit } = useForm();
   const updateProfile = (body) => {
-    mutate(body);
+    const updateBody = {
+      ...body,
+      Gender: data.gender,
+      TimeBeforeBooking: "",
+      WorkHours: "",
+    };
+    console.log(body);
+    console.log(updateBody);
+    mutate(updateBody);
   };
 
   const closeModal = () => {
@@ -56,7 +60,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     name="name"
                     className="input-text"
                     defaultValue={data.firstName}
-                    {...register('firstName')}
+                    {...register("firstName")}
                   />
                 </div>
 
@@ -73,13 +77,13 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     className="input-text"
                     name="lastname"
                     defaultValue={data.lastName}
-                    {...register('lastName')}
+                    {...register("lastName")}
                   />
                 </div>
               </div>
 
               <div className="flex gap-x-8">
-                <div className="flex flex-col">
+                {/* <div className="flex flex-col">
                   <label
                     htmlFor="email"
                     className="text-green-pon font-semibold"
@@ -92,9 +96,9 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     placeholder="E-mail"
                     className="input-text"
                     defaultValue={data.email}
-                    {...register('email')}
+                    {...register("email")}
                   />
-                </div>
+                </div> */}
 
                 <div className="flex flex-col">
                   <label
@@ -109,7 +113,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     placeholder="Телефон"
                     className="input-text"
                     defaultValue={data.phone}
-                    {...register('phone')}
+                    {...register("phone")}
                   />
                 </div>
               </div>
@@ -127,8 +131,8 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     name="dateofbirth"
                     placeholder="Дата рождения"
                     className="input-text"
-                    defaultValue={data.dateOfBirth.split('T')[0]}
-                    {...register('dateOfBirth')}
+                    defaultValue={data.dateOfBirth.split("T")[0]}
+                    {...register("dateOfBirth")}
                   />
                 </div>
               </div>
@@ -148,7 +152,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     placeholder="О себе"
                     defaultValue={data.aboutMe}
                     className="input-text"
-                    {...register('aboutMe')}
+                    {...register("aboutMe")}
                   ></textarea>
                 </div>
               </div>
@@ -168,7 +172,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     placeholder="Что получит пациент после сеанса"
                     className="input-text"
                     defaultValue={data.sessionFeedback}
-                    {...register('sessionFeedback')}
+                    {...register("sessionFeedback")}
                   ></textarea>
                 </div>
               </div>
@@ -182,7 +186,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                   </label>
                   <input
                     type="number"
-                    {...register('yearsOfExperience')}
+                    {...register("yearsOfExperience")}
                     name="yearsOfExperience"
                     placeholder="Опыт работы"
                     className="input-text"
@@ -204,7 +208,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     className="input-text"
                     name="educationPlace"
                     defaultValue={data.educationPlace}
-                    {...register('educationPlace')}
+                    {...register("educationPlace")}
                   />
                 </div>
 
@@ -217,11 +221,76 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                   </label>
                   <input
                     type="number"
-                    {...register('yearOfGraduation')}
+                    {...register("yearOfGraduation")}
                     placeholder="Год выпуска"
                     name="yearOfGraduation"
                     className="input-text"
                     defaultValue={data.yearOfGraduation}
+                  />
+                </div>
+              </div>
+              <div className="flex gap-x-8">
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="sessionDuration"
+                    className="text-green-pon font-semibold"
+                  >
+                    Время продолжительности одного сеанса
+                  </label>
+
+                  <select
+                    className="input-text"
+                    name="sessionDuration"
+                    id="sessionDuration"
+                    {...register("sessionDuration")}
+                    defaultValue={data.sessionDuration}
+                  >
+                    <option value="15">15 минут</option>
+                    <option value="30">30 минут</option>
+                    <option value="60">1 час</option>
+                    <option value="120">2 часа</option>
+                    <option value="180">3 часа</option>
+                  </select>
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="breakDuration"
+                    className="text-green-pon font-semibold"
+                  >
+                    Время перерыва между часами
+                  </label>
+
+                  <select
+                    className="input-text"
+                    name="breakDuration"
+                    id="breakDuration"
+                    {...register("breakDuration")}
+                    defaultValue={data.breakDuration}
+                  >
+                    <option value="15">15 минут</option>
+                    <option value="30">30 минут</option>
+                    <option value="60">1 час</option>
+                    <option value="120">2 часа</option>
+                    <option value="180">3 часа</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex gap-x-8">
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="sessionPrice"
+                    className="text-green-pon font-semibold"
+                  >
+                    Цена за один сеанс
+                  </label>
+                  <input
+                    type="number"
+                    {...register("sessionPrice")}
+                    placeholder="Цена за один сеанс"
+                    name="sessionPrice"
+                    className="input-text"
+                    defaultValue={data.sessionPrice}
                   />
                 </div>
               </div>

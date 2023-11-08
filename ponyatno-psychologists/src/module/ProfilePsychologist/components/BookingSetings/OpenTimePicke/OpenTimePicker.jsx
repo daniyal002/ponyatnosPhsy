@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useSetAvailability } from '../../../hook/useSetAvailability';
-import { useGetProfileById } from '../../../hook/useGetProfileById';
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSetAvailability } from "../../../hook/useSetAvailability";
+import { useGetProfileById } from "../../../hook/useGetProfileById";
 
 const OpenTimePicker = ({ dayOfWeek, isPickerOpen, setIsPickerOpen }) => {
   const { register, handleSubmit } = useForm();
@@ -11,7 +11,7 @@ const OpenTimePicker = ({ dayOfWeek, isPickerOpen, setIsPickerOpen }) => {
   const setAvailability = (body) => {
     const udpateBody = {
       ...body,
-      psychologistId: '1',
+      psychologistProfileId: data.psychologistId,
       dayOfWeek: dayOfWeek,
       startTime: `${body.startTime}:00`, // Добавляем секунды
       endTime: `${body.endTime}:00`, // Добавляем секунды
@@ -21,13 +21,13 @@ const OpenTimePicker = ({ dayOfWeek, isPickerOpen, setIsPickerOpen }) => {
   };
 
   const weekOfDay = {
-    0: 'Воскресенье',
-    1: 'Понедельник',
-    2: 'Вторник',
-    3: 'Среда',
-    4: 'Четверг',
-    5: 'Пятница',
-    6: 'Суббота',
+    0: "Воскресенье",
+    1: "Понедельник",
+    2: "Вторник",
+    3: "Среда",
+    4: "Четверг",
+    5: "Пятница",
+    6: "Суббота",
   };
 
   const [updateDayOfWeek, setUpdateDayOfWeek] = useState(weekOfDay[dayOfWeek]);
@@ -75,7 +75,7 @@ const OpenTimePicker = ({ dayOfWeek, isPickerOpen, setIsPickerOpen }) => {
                     className="input-text"
                     type="time"
                     id="timeFromMonday"
-                    {...register('startTime')}
+                    {...register("startTime")}
                   />
                 </div>
                 <div className="flex flex-col">
@@ -89,7 +89,7 @@ const OpenTimePicker = ({ dayOfWeek, isPickerOpen, setIsPickerOpen }) => {
                     type="time"
                     id="timeToMonday"
                     className="input-text"
-                    {...register('endTime')}
+                    {...register("endTime")}
                   />
                 </div>
               </div>

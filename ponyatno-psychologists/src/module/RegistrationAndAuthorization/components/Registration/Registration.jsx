@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
-import { useRegistration } from '../../hooks/useRegistration';
-import { isPasswordValid } from '../../help/ValidatePassword';
+import React, { useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { useRegistration } from "../../hooks/useRegistration";
+import { isPasswordValid } from "../../help/ValidatePassword";
 
 const Registration = ({ role }) => {
-  const [selectedGender, setSelectedGender] = useState('male');
+  const [selectedGender, setSelectedGender] = useState("male");
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
   };
@@ -18,7 +18,11 @@ const Registration = ({ role }) => {
   const { mutate, error } = useRegistration();
 
   const registration = (data) => {
-    const body = { ...data, userRole: 'Psychologists' };
+    const body = {
+      ...data,
+      userRole: "Psychologists",
+      dateOfBirth: data.dateOfBirth + "T00:00:00.000Z",
+    };
     mutate(body);
   };
 
@@ -33,7 +37,7 @@ const Registration = ({ role }) => {
         <input
           type="text"
           name="RegisterLogin"
-          {...register('RegisterLogin')}
+          {...register("RegisterLogin")}
           placeholder="Придумайте Логин"
           className="input-text"
           required={true}
@@ -42,7 +46,7 @@ const Registration = ({ role }) => {
         <input
           type="email"
           name="RegisterEmail"
-          {...register('RegisterEmail')}
+          {...register("RegisterEmail")}
           placeholder="Ваш E-mail"
           className="input-text"
           required={true}
@@ -71,7 +75,7 @@ const Registration = ({ role }) => {
         <input
           type="text"
           name="RegisterFirstName"
-          {...register('RegisterFirstName')}
+          {...register("RegisterFirstName")}
           placeholder="Ваше Имя"
           className="input-text"
           required={true}
@@ -81,17 +85,17 @@ const Registration = ({ role }) => {
         <input
           name="RegisterLastName"
           type="text"
-          {...register('RegisterLastName')}
+          {...register("RegisterLastName")}
           placeholder="Ваша Фамилия"
           className="input-text"
           required={true}
         />
 
-        <label htmlFor="DateOfBirth">Дата рождения: </label>
+        <label htmlFor="dateOfBirth">Дата рождения: </label>
         <input
           type="date"
-          name="DateOfBirth"
-          {...register('DateOfBirth')}
+          name="dateOfBirth"
+          {...register("dateOfBirth")}
           className="outline-none p-3"
           required={true}
         />
@@ -104,9 +108,9 @@ const Registration = ({ role }) => {
               type="radio"
               value="Мужчина"
               id="male"
-              checked={selectedGender === 'male'}
-              onClick={() => handleGenderChange('male')}
-              {...register('Gender')}
+              checked={selectedGender === "male"}
+              onClick={() => handleGenderChange("male")}
+              {...register("Gender")}
             />
             <label
               htmlFor="male"
@@ -122,9 +126,9 @@ const Registration = ({ role }) => {
               type="radio"
               value="Женщина"
               id="female"
-              checked={selectedGender === 'female'}
-              onClick={() => handleGenderChange('female')}
-              {...register('Gender')}
+              checked={selectedGender === "female"}
+              onClick={() => handleGenderChange("female")}
+              {...register("Gender")}
             />
             <label
               htmlFor="female"
@@ -135,12 +139,12 @@ const Registration = ({ role }) => {
           </div>
           <span
             className={`absolute flex w-[50%] h-[100%] bg-green-pon text-white z-[1] rounded-t-sm transition top-0 left-0 justify-center items-center  ${
-              selectedGender === 'female'
-                ? 'transform translate-x-full duration-500 ease-linear'
-                : 'transform translate-x-0 duration-500 ease-linear'
+              selectedGender === "female"
+                ? "transform translate-x-full duration-500 ease-linear"
+                : "transform translate-x-0 duration-500 ease-linear"
             }`}
           >
-            {selectedGender === 'male' ? 'Мужчина' : 'Женщина'}
+            {selectedGender === "male" ? "Мужчина" : "Женщина"}
           </span>
         </div>
 

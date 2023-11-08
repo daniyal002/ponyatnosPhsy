@@ -1,12 +1,13 @@
-import axios from 'axios';
-import useTokenStore from '../../../store/store';
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+axios.defaults.baseURL = "http://212.118.52.175:8080";
 
 const GetAvailability = async () => {
-  const { token } = useTokenStore();
-
   return axios
     .get(
-      'http://212.118.52.175:8080/api/PsychologistAvailability/GetAllAvailability',
+      "/api/PsychologistAvailability/GetAllAvailability",
 
       {
         headers: {
@@ -15,8 +16,8 @@ const GetAvailability = async () => {
       }
     )
     .then((response) => {
-      return response.data;
+      return response.data.$values;
     });
 };
 
-export default GetAvailability;
+export { GetAvailability };

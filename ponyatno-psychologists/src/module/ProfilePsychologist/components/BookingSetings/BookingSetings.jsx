@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import OpenTimePicker from './OpenTimePicke/OpenTimePicker';
-import { useGetAvailability } from '../../hook/useGetAvailability';
-import deleteIcon from '../../../../assets/icon/delete.svg';
-import { useDeleteAvailability } from '../../hook/useDeleteAvailability';
-import Calendar from '../Calendar/Calendar';
+import React, { useEffect, useState } from "react";
+import OpenTimePicker from "./OpenTimePicke/OpenTimePicker";
+import { useGetAvailability } from "../../hook/useGetAvailability";
+import deleteIcon from "../../../../assets/icon/delete.svg";
+import { useDeleteAvailability } from "../../hook/useDeleteAvailability";
+import { useGetProfileById } from "../../hook/useGetProfileById";
 
 const BookingSetings = () => {
-  const [isPickerOpen, setIsPickerOpen] = useState('');
-  const [dayOfWeek, setDayOfWeek] = useState('');
+  const [isPickerOpen, setIsPickerOpen] = useState("");
+  const [dayOfWeek, setDayOfWeek] = useState("");
   const { data } = useGetAvailability();
+  const { data: GetProfile } = useGetProfileById();
+
   const { mutate } = useDeleteAvailability();
+
+  useEffect(() => {
+    console.log(GetProfile.psychologistAvailability.$values);
+  }, []);
 
   const deleteTimeSettings = (body) => {
     mutate(body);
@@ -31,7 +37,7 @@ const BookingSetings = () => {
         dayOfWeek={dayOfWeek}
         setIsPickerOpen={setIsPickerOpen}
       />
-      <Calendar />
+
       <div className="border-4 text-center">
         <h1 className="text-green-pon font-semibold mb-3">
           Настройка рабочего времени по дням недели
@@ -40,7 +46,7 @@ const BookingSetings = () => {
           Понедельник
         </h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 1 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -56,7 +62,7 @@ const BookingSetings = () => {
       <div className="border-4 text-center">
         <h3 className="bg-green-pon p-3 text-white font-semibold">Вторник</h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 2 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -72,7 +78,7 @@ const BookingSetings = () => {
       <div className="border-4 text-center">
         <h3 className="bg-green-pon p-3 text-white font-semibold">Среда</h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 3 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -88,7 +94,7 @@ const BookingSetings = () => {
       <div className="border-4 text-center">
         <h3 className="bg-green-pon p-3 text-white font-semibold">Четверг</h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 4 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -104,7 +110,7 @@ const BookingSetings = () => {
       <div className="border-4 text-center">
         <h3 className="bg-green-pon p-3 text-white font-semibold">Пятница</h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 5 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -120,7 +126,7 @@ const BookingSetings = () => {
       <div className="border-4 text-center">
         <h3 className="bg-green-pon p-3 text-white font-semibold">Суббота</h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 6 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>
@@ -138,7 +144,7 @@ const BookingSetings = () => {
           Воскресенье
         </h3>
         {data &&
-          data.map((dayData) =>
+          GetProfile.psychologistAvailability.$values.map((dayData) =>
             dayData.dayOfWeek === 0 ? (
               <div key={dayData.dayOfWeek}>
                 <p>Начало: {dayData.startTime}</p>

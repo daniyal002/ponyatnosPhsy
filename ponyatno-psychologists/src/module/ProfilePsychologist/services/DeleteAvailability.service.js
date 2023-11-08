@@ -1,12 +1,13 @@
-import axios from 'axios';
-import useTokenStore from '../../../store/store';
+import axios from "axios";
+import Cookies from "js-cookie";
+
+const token = Cookies.get("token");
+axios.defaults.baseURL = "http://212.118.52.175:8080";
 
 const DeleteAvailability = async (body) => {
-  const { token } = useTokenStore();
-
   return axios
     .delete(
-      `http://212.118.52.175:8080/api/PsychologistAvailability/DeleteAvailability/${body}`,
+      `/api/PsychologistAvailability/DeleteAvailability/${body}`,
 
       {
         headers: {
@@ -19,4 +20,4 @@ const DeleteAvailability = async (body) => {
     });
 };
 
-export default DeleteAvailability;
+export { DeleteAvailability };
