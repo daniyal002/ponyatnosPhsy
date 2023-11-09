@@ -16,7 +16,7 @@ const GetAvailability = async () => {
       }
     )
     .then((response) => {
-      return response.data.$values;
+      console.log(response.data.$values);
     });
 };
 

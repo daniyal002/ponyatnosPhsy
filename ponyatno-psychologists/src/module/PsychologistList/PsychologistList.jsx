@@ -10,9 +10,14 @@ const PsychologistList = () => {
   }, []);
 
   return (
-    <div>
+    <div className="flex flex-col gap-y-6">
       PsychologistList
-      {data && data.map((psy) => <PsychologistItem info={psy} />)}
+      {data &&
+        data.map((psy) => (
+          <div key={psy.$id}>
+            <PsychologistItem info={psy} />
+          </div>
+        ))}
     </div>
   );
 };

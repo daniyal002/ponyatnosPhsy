@@ -7,11 +7,17 @@ import { addDays } from "date-fns";
 
 registerLocale("ru", ru);
 
-const Calendar = ({ availability, breakDuration, sessionDuration }) => {
+const Calendar = ({
+  availability,
+  breakDuration,
+  sessionDuration,
+  timeBeforeBooking,
+}) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [timeInterval, setTimeInterval] = useState(60);
+  const [timeBefore, setTimeBefore] = useState();
 
   useEffect(() => {
     console.log(breakDuration, sessionDuration);
@@ -19,6 +25,7 @@ const Calendar = ({ availability, breakDuration, sessionDuration }) => {
     const intSessionDuration = Number(sessionDuration);
     const summTimeInterval = intBreakDuration + intSessionDuration;
     setTimeInterval(summTimeInterval);
+    setTimeBefore(Number(timeBeforeBooking));
   }, []);
 
   const isWeekend = (date) => {
@@ -120,7 +127,7 @@ const Calendar = ({ availability, breakDuration, sessionDuration }) => {
               return currentDate;
             }).filter(isWeekend),
           ]}
-          minDate={new Date()}
+          minDate={addDays(new Date(), timeBefore)}
           maxDate={addDays(new Date(), 31)}
           className="p-3 rounded-lg bg-green-pon placeholder:text-white outline-none text-white text-center"
         />

@@ -12,7 +12,6 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
     const updateBody = {
       ...body,
       Gender: data.gender,
-      TimeBeforeBooking: "",
       WorkHours: "",
     };
     console.log(body);
@@ -257,7 +256,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     htmlFor="breakDuration"
                     className="text-green-pon font-semibold"
                   >
-                    Время перерыва между часами
+                    Время перерыва между сеансом
                   </label>
 
                   <select
@@ -291,6 +290,22 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     name="sessionPrice"
                     className="input-text"
                     defaultValue={data.sessionPrice}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="timeBeforeBooking"
+                    className="text-green-pon font-semibold"
+                  >
+                    Сколько дней до начала записи
+                  </label>
+                  <input
+                    type="number"
+                    {...register("timeBeforeBooking")}
+                    placeholder="Сколько дней до начала записи"
+                    name="timeBeforeBooking"
+                    className="input-text"
+                    defaultValue={data.timeBeforeBooking}
                   />
                 </div>
               </div>
