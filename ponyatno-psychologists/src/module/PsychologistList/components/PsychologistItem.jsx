@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "../../Calendar/Calendar";
 import { CSSTransition } from "react-transition-group";
 const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
+  useEffect(() => {
+    console.log(info.firstName);
+  }, [info]);
 
   return (
     <div className="flex max-w-[700px] justify-center  flex-wrap mx-auto bg-white  rounded-lg border-green-pon border-solid border-2 mb-7 gap-x-5">
@@ -19,10 +22,10 @@ const PsychologistItem = ({ info }) => {
           {info.user && (
             <div className="flex gap-x-4 justify-center">
               <p className="text-3xl font-semibold text-green-pon">
-                {info.user.firstName}
+                {info.firstName}
               </p>
               <p className="text-3xl font-semibold text-green-pon">
-                {info.user.lastName}
+                {info.lastName}
               </p>
             </div>
           )}
@@ -51,7 +54,7 @@ const PsychologistItem = ({ info }) => {
           >
             <div>
               <Calendar
-                availability={info.psychologistAvailability.$values}
+                availability={info.psychologistProfiles.$values}
                 breakDuration={info.breakDuration}
                 sessionDuration={info.sessionDuration}
                 timeBeforeBooking={info.timeBeforeBooking}

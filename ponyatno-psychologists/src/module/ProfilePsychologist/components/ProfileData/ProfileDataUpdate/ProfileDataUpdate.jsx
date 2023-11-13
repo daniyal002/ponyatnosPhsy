@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useGetProfileById } from "../../../hook/useGetProfileById";
 import { useUpdatetProfileById } from "../../../hook/useUpdatetProfileById";
 
@@ -7,7 +7,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
   const { data } = useGetProfileById();
   const { mutate, error } = useUpdatetProfileById();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control } = useForm();
   const updateProfile = (body) => {
     const updateBody = {
       ...body,
@@ -133,6 +133,79 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen }) => {
                     defaultValue={data.dateOfBirth.split("T")[0]}
                     {...register("dateOfBirth")}
                   />
+                </div>
+              </div>
+
+              <div className="flex gap-x-8">
+                <div className="flex flex-col">
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="psychologist"
+                      className="form-checkbox text-green-500"
+                      {...register("specialization")}
+                      value={"Психолог"}
+                    />
+                    <label htmlFor="psychologist" className="text-green-500">
+                      Психолог
+                    </label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="therapist"
+                      className="form-checkbox text-blue-500"
+                      {...register("specialization")}
+                      value={"Терапевт"}
+                    />
+                    <label htmlFor="therapist" className="text-blue-500">
+                      Терапевт
+                    </label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="coach"
+                      className="form-checkbox text-purple-500"
+                      {...register("specialization")}
+                      value={"Терапевт"}
+                    />
+                    <label htmlFor="coach" className="text-purple-500">
+                      Коуч
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-x-8">
+                <div className="flex flex-col">
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="psychologist"
+                      className="form-checkbox text-green-500"
+                      {...register("psychologicalApproach")}
+                      value={"Гештальт"}
+                    />
+                    <label htmlFor="psychologist" className="text-green-500">
+                      Гештальт
+                    </label>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      id="therapist"
+                      className="form-checkbox text-blue-500"
+                      {...register("psychologicalApproach")}
+                      value={"супер"}
+                    />
+                    <label htmlFor="therapist" className="text-blue-500">
+                      супер
+                    </label>
+                  </div>
                 </div>
               </div>
 

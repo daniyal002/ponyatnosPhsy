@@ -13,6 +13,9 @@ const Calendar = ({
   sessionDuration,
   timeBeforeBooking,
 }) => {
+  useEffect(() => {
+    availability;
+  }, []);
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
