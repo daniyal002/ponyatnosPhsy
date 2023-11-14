@@ -14,7 +14,7 @@ const Calendar = ({
   timeBeforeBooking,
 }) => {
   useEffect(() => {
-    availability;
+    console.log("Calendar", availability[0].psychologistAvailabilityDto.$values[0]);
   }, []);
   const [selectedDate, setSelectedDate] = useState(null);
   const [startTime, setStartTime] = useState(null);
@@ -33,7 +33,7 @@ const Calendar = ({
 
   const isWeekend = (date) => {
     const day = date.getDay();
-    const dayOfWeek = availability && availability.map((day) => day.dayOfWeek);
+    const dayOfWeek = availability && availability.map((day) => day.psychologistAvailabilityDto.$values[0].dayOfWeek);
     return dayOfWeek && !dayOfWeek.includes(day);
   };
 
@@ -66,7 +66,7 @@ const Calendar = ({
     const hours = selectedDateWithoutTime.getHours();
 
     // Проверяем, что текущий день входит в dayOfWeek из данных доступности
-    const dayOfWeek = availability.map((day) => day.dayOfWeek);
+    const dayOfWeek = availability.map((day) => day.psychologistAvailabilityDto.$values[0].dayOfWeek);
     const isWorkingDay = dayOfWeek.includes(day);
 
     // Устанавливаем рабочее время для понедельника (или другого дня) здесь
@@ -81,10 +81,10 @@ const Calendar = ({
     };
 
     availability.forEach((item) => {
-      if (item.dayOfWeek in workingHoursByDay) {
-        workingHoursByDay[item.dayOfWeek].push({
-          startTime: parseInt(item.startTime.split(":")[0]),
-          endTime: parseInt(item.endTime.split(":")[0]),
+      if (item.psychologistAvailabilityDto.$values[0].dayOfWeek in workingHoursByDay) {
+        workingHoursByDay[item.psychologistAvailabilityDto.$values[0].dayOfWeek].push({
+          startTime: parseInt(item.psychologistAvailabilityDto.$values[0].startTime.split(":")[0]),
+          endTime: parseInt(item.psychologistAvailabilityDto.$values[0].endTime.split(":")[0]),
         });
       }
     });

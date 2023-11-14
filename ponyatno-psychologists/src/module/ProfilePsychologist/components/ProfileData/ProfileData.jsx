@@ -50,6 +50,29 @@ const ProfileData = () => {
                 </span>{" "}
                 <span>{data.dateOfBirth.split("T")[0]} </span>
               </p>
+
+              <p className="profile-text">
+                <span className="text-green-pon font-semibold">
+                  Специализация
+                </span>{" "}
+                <span className="flex flex-wrap ">
+                  {data.specialization.$values.map((spec, index) => (
+                    <p key={index}>{spec},</p>
+                  ))}
+                </span>
+              </p>
+
+              <p className="profile-text">
+                <span className="text-green-pon font-semibold">
+                  Психологический подход
+                </span>{" "}
+                <span className="flex flex-wrap ">
+                  {data.psychologicalApproach.$values.map((spec, index) => (
+                    <p key={index}>{spec},</p>
+                  ))}
+                </span>
+              </p>
+
               <p className="profile-text">
                 <span className="text-green-pon font-semibold">О себе</span>{" "}
                 <span>{data.aboutMe}</span>

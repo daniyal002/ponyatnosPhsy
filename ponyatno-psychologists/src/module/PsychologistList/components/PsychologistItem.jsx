@@ -19,16 +19,25 @@ const PsychologistItem = ({ info }) => {
           />
         </div>
         <div className="flex flex-col gap-y-4">
-          {info.user && (
-            <div className="flex gap-x-4 justify-center">
-              <p className="text-3xl font-semibold text-green-pon">
-                {info.firstName}
-              </p>
-              <p className="text-3xl font-semibold text-green-pon">
-                {info.lastName}
-              </p>
+          <div className="flex gap-x-4 justify-center">
+            <p className="text-3xl font-semibold text-green-pon">
+              {info.firstName}
+            </p>
+            <p className="text-3xl font-semibold text-green-pon">
+              {info.lastName}
+            </p>
+          </div>
+
+          <div>
+            <h5 className="text-center">Специализация:</h5>
+            <div className="w-[250px] mx-auto flex flex-wrap justify-center gap-x-2">
+              {info.specialization &&
+                info.specialization.$values.map((spec, index) => (
+                  <p key={index}>{spec}</p>
+                ))}
             </div>
-          )}
+          </div>
+
           <div className="flex justify-center">
             {!openCalendar ? (
               <button
@@ -115,20 +124,18 @@ const PsychologistItem = ({ info }) => {
 
       {more && (
         <div className="flex flex-col gap-y-5 justify-center items-center p-8 sm:p-5">
-          <div className="flex flex-col gap-y-2  w-[50%] md:max-w-[600px] my-6">
-            <h6 className=" text-[18px] md:text-[26px]">
-              Психологический подход
-            </h6>
+          <div className="flex flex-col gap-y-2 my-6 w-2/3">
+            <h6 className="text-[26px]">Психологический подход</h6>
             <div className="flex gap-x-8 justify-start">
-              <p className="bg-green-pon text-white font-semibold p-2 rounded-lg text-[18px]">
-                Гештальт
-              </p>
-              <p className="bg-green-pon text-white font-semibold p-2 rounded-lg text-[18px]">
-                Гештальт
-              </p>
-              <p className="bg-green-pon text-white font-semibold p-2 rounded-lg text-[18px]">
-                Гештальт
-              </p>
+              {info.psychologicalApproach &&
+                info.psychologicalApproach.$values.map((approach, index) => (
+                  <p
+                    key={index}
+                    className="bg-green-pon text-white font-semibold p-2 rounded-lg text-[18px]"
+                  >
+                    {approach}
+                  </p>
+                ))}
             </div>
           </div>
           <div className="flex flex-col gap-y-3 w-2/3">
