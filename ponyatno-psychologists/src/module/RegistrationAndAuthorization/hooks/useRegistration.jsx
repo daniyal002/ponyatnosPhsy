@@ -10,7 +10,7 @@ export const useRegistration = () => {
 
   const { mutate } = useMutation(["Registration"], (body) => reg(body), {
     onSuccess: () => {
-      navigate("/auth/reg");
+      navigate("/auth/login");
     },
     onError: (error) => {
       setError(error.response?.data?.message);

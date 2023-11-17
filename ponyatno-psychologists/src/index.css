@@ -6,8 +6,14 @@
   .input-text {
     @apply p-3 border-b-4 rounded-lg border-white outline-none transition   focus:border-green-pon focus:transition focus:duration-700;
   }
+  .input-select {
+    @apply p-3 rounded-lg border-white outline-none transition   focus:border-green-pon focus:transition focus:duration-700;
+  }
   .profile-text {
-    @apply bg-white p-3 rounded-lg  text-xl w-3/4 flex gap-y-6 flex-col items-center;
+    @apply flex flex-col gap-y-2 w-1/2;
+  }
+  .profile-textHeader {
+    @apply text-green-pon font-bold text-[16px] md:text-[20px];
   }
   .btn-default {
     @apply mb-5 bg-white p-4 rounded-lg text-green-pon uppercase font-bold;

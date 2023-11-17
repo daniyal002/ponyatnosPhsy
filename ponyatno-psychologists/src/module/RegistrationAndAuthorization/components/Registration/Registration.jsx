@@ -20,17 +20,17 @@ const Registration = ({ role }) => {
   const registration = (data) => {
     const body = {
       ...data,
-      userRole: "Psychologists",
+      userRole: role,
       dateOfBirth: data.dateOfBirth + "T00:00:00.000Z",
     };
     mutate(body);
   };
 
   return (
-    <div className="m-6">
+    <div className="m-6 ">
       <form
         onSubmit={handleSubmit(registration)}
-        className="w-3/4 md:w-[30%] h-full bg-[#ebf3ef] mx-auto   p-5 flex flex-col gap-y-3 shadow-[#3a3a3a] shadow-2xl"
+        className="w-3/4 md:w-[30%] h-full bg-[#ebf3ef] mx-auto   p-5 flex flex-col gap-y-3 shadow-[#3a3a3a] shadow-2xl rounded-lg"
       >
         <h1 className="text-3xl text-green-pon">Регистрация</h1>
         <label htmlFor="RegisterLogin">Логин: </label>

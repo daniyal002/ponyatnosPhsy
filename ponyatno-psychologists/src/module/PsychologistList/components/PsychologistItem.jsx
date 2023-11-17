@@ -67,6 +67,7 @@ const PsychologistItem = ({ info }) => {
                 breakDuration={info.breakDuration}
                 sessionDuration={info.sessionDuration}
                 timeBeforeBooking={info.timeBeforeBooking}
+                psychologistProfileId={info.psychologistId}
               />
             </div>
           </CSSTransition>
