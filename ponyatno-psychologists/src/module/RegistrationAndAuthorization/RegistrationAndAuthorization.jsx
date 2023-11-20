@@ -3,7 +3,7 @@ import { Link, Outlet } from "react-router-dom";
 
 const RegistrationAndAuthorization = () => {
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen">
+    <div className="flex flex-col justify-center items-center min-h-screen ">
       <div className="w-3/4 md:w-[30%] flex justify-center gap-x-10 m-4">
         <Link
           to="/auth/login"

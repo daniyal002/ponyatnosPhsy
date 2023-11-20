@@ -63,7 +63,7 @@ const PsychologistFilter = ({ setFilter, openFilter, setOpenFilter }) => {
     <>
       {openFilter && (
         <div
-          className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-50 z-40"
+          className="  fixed top-10 left-10  flex items-center justify-center "
           onClick={closeModal}
         >
           <div
@@ -77,7 +77,7 @@ const PsychologistFilter = ({ setFilter, openFilter, setOpenFilter }) => {
               X
             </button>
 
-            <div className="bg-white border-2 border-green-pon p-4 w-full  rounded-lg ">
+            <div className="bg-white border-2 border-green-pon p-4 rounded-lg w-[400px]">
               <h4 className="text-[32px] text-center">Фильтры</h4>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-y-2 mb-4">

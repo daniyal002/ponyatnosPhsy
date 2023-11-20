@@ -63,7 +63,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen, role }) => {
         Gender: data.gender,
         dateOfBirth: body.dateOfBirth + "T00:00:00.000Z",
       };
-    } else {
+    } else if (role === "Psychologists") {
       updateBody = {
         ...body,
         specialization: selectSpecialization,

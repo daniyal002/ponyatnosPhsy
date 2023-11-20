@@ -141,7 +141,9 @@ const Calendar = ({
         dayOfWeek={selectedDate}
       />
       <div className="flex flex-col gap-y-5 items-center">
-        <h2>Выберите подходящий день для бронирования:</h2>
+        <h2 className="w-[300px] text-center text-white">
+          Выберите подходящий день для бронирования:
+        </h2>
 
         <div>
           <DatePicker
@@ -166,8 +168,10 @@ const Calendar = ({
           />
         </div>
         <div className="flex flex-col gap-y-5 items-center">
-          <h2>Выберите подходящее время для бронирования:</h2>
-          <div className="flex flex-row">
+          <h2 className="w-[300px] text-center text-white">
+            Выберите подходящее время для бронирования:
+          </h2>
+          <div className="flex flex-col xs:flex-row">
             <DatePicker
               selected={startTime}
               onChange={handleStartTimeChange}

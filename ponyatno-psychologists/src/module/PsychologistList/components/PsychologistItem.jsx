@@ -9,8 +9,8 @@ const PsychologistItem = ({ info }) => {
   }, [info]);
 
   return (
-    <div className="flex max-w-[700px] justify-center  flex-wrap mx-auto bg-white  rounded-lg border-green-pon border-solid border-2 mb-7 gap-x-5">
-      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto">
+    <div className="flex flex-col max-w-[280px] xs:max-w-[700px] mt-1 backdrop-blur-xl bg-white/30 justify-center p-3  flex-wrap mx-auto   rounded-lg border-green-pon border-solid border-2 mb-7 gap-x-5">
+      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto ">
         <div>
           <img
             src="https://shapka-youtube.ru/wp-content/uploads/2020/12/man-ava1.jpg"
@@ -20,20 +20,22 @@ const PsychologistItem = ({ info }) => {
         </div>
         <div className="flex flex-col gap-y-4">
           <div className="flex gap-x-4 justify-center">
-            <p className="text-3xl font-semibold text-green-pon">
+            <p className="text-3xl font-semibold text-white">
               {info.firstName}
             </p>
-            <p className="text-3xl font-semibold text-green-pon">
-              {info.lastName}
-            </p>
+            <p className="text-3xl font-semibold text-white">{info.lastName}</p>
           </div>
 
           <div>
-            <h5 className="text-center">Специализация:</h5>
-            <div className="w-[250px] mx-auto flex flex-wrap justify-center gap-x-2">
+            <h5 className="text-center text-green-pon font-semibold text-[20px]">
+              Специализация:
+            </h5>
+            <div className="w-[300px] mx-auto flex flex-wrap justify-center gap-x-2">
               {info.specialization &&
                 info.specialization.$values.map((spec, index) => (
-                  <p key={index}>{spec}</p>
+                  <p key={index} className="text-white">
+                    {spec}
+                  </p>
                 ))}
             </div>
           </div>
@@ -71,50 +73,32 @@ const PsychologistItem = ({ info }) => {
               />
             </div>
           </CSSTransition>
-
-          {!more ? (
-            <div className="flex justify-center">
-              <button
-                className="border-[2px] border-green-pon p-4 rounded-lg mb-3"
-                onClick={() => setMore(true)}
-              >
-                Развернуть профиль
-              </button>
-            </div>
-          ) : (
-            <div className="flex justify-center">
-              <button
-                className="border-[2px] border-white text-white p-4 rounded-lg "
-                onClick={() => setMore(true)}
-              >
-                Развернуть профиль
-              </button>
-            </div>
-          )}
         </div>
       </div>
 
-      <div className="flex flex-col justify-center gap-y-4">
+      <div className="flex  justify-center gap-y-4 my-4">
         <div>
-          <div className="flex flex-row justify-between sm:justify-end items-end gap-y-[1px] md:flex-col gap-x-2">
-            <div className="flex items-center justify-center box-border  w-1/2 sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
-              <p className="flex flex-col  text-[30px] font-bold text-white">
+          <div className="flex flex-row justify-start xs:justify-center items-end gap-y-[1px]  gap-x-2">
+            <div className="flex items-center justify-center box-border  rounded-lg  w-[30%] sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
+              <p className="flex flex-col text-[20px] font-bold text-white xs:text-[30px]">
                 {info.yearsOfExperience}
-                <span className="text-[18px] font-normal"> лет опыта</span>
+                <span className="text-[14px] font-normal xs:text-[18px]">
+                  лет опыта
+                </span>
               </p>
             </div>
-            <div className="flex items-center justify-center box-border  w-1/2 sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
-              <p className=" flex flex-col text-[30px] font-bold text-white">
+            <div className="flex items-center justify-center box-border rounded-lg w-[30%] sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
+              <p className="flex flex-col text-[20px] font-bold text-white xs:text-[30px]">
                 1
-                <span className="text-[18px] font-normal">
+                <span className="text-[14px] font-normal xs:text-[18px]">
                   Диплом психолога
                 </span>
               </p>
             </div>
-            <div className="flex items-center justify-center box-border  w-1/2 sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
-              <p className=" flex flex-col text-[30px] font-bold text-white">
+            <div className="flex items-center justify-center box-border  rounded-lg  w-[30%] sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
+              <p className="flex flex-col text-[20px] font-bold text-white xs:text-[30px]">
                 3
-                <span className="text-[18px] font-normal">
+                <span className="text-[14px] font-normal xs:text-[18px]">
                   профильных курса
                 </span>
               </p>
@@ -123,10 +107,29 @@ const PsychologistItem = ({ info }) => {
         </div>
       </div>
 
+      {!more ? (
+        <div className="flex justify-center">
+          <button
+            className="border-[2px] border-green-pon p-4 rounded-lg mb-3 text-white"
+            onClick={() => setMore(true)}
+          >
+            Развернуть профиль
+          </button>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <button className="hidden" onClick={() => setMore(true)}>
+            Развернуть профиль
+          </button>
+        </div>
+      )}
+
       {more && (
-        <div className="flex flex-col gap-y-5 justify-center items-center p-8 sm:p-5">
+        <div className="flex flex-col gap-y-5 justify-center items-center p-3 sm:p-3 max-w-[580px]">
           <div className="flex flex-col gap-y-2 my-6 w-2/3">
-            <h6 className="text-[26px]">Психологический подход</h6>
+            <h6 className="text-[26px] text-green-pon font-semibold">
+              Психологический подход
+            </h6>
             <div className="flex gap-x-8 justify-start">
               {info.psychologicalApproach &&
                 info.psychologicalApproach.$values.map((approach, index) => (
@@ -140,18 +143,22 @@ const PsychologistItem = ({ info }) => {
             </div>
           </div>
           <div className="flex flex-col gap-y-3 w-2/3">
-            <h6 className="text-[26px]">О себе</h6>
-            <p>{info.aboutMe}</p>
+            <h6 className="text-[26px] text-green-pon font-semibold">О себе</h6>
+            <p className="text-white">{info.aboutMe}</p>
           </div>
 
           <div className="flex flex-col gap-y-3 w-2/3">
-            <h6 className="text-[26px]">Что даст сеанс</h6>
-            <p>{info.sessionFeedback}</p>
+            <h6 className="text-[26px] text-green-pon font-semibold">
+              Что даст сеанс
+            </h6>
+            <p className="text-white">{info.sessionFeedback}</p>
           </div>
 
           <div className="flex flex-col gap-y-3 w-2/3">
-            <h6 className="text-[26px]">Образование</h6>
-            <p>
+            <h6 className="text-[26px] text-green-pon font-semibold">
+              Образование
+            </h6>
+            <p className="text-white">
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Dignissimos quidem eum esse commodi facere totam veritatis
               reprehenderit placeat consequatur repudiandae at nemo laborum
@@ -160,7 +167,7 @@ const PsychologistItem = ({ info }) => {
           </div>
           <div className="flex justify-center">
             <button
-              className="border-[2px] border-green-pon p-4 rounded-lg "
+              className="border-[2px] border-green-pon p-4 rounded-lg text-white "
               onClick={() => setMore(false)}
             >
               Свернуть профиль

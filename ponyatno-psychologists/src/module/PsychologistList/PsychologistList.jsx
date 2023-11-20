@@ -15,27 +15,24 @@ const PsychologistList = () => {
   const filteredData = data ? applyFilter(data, filter) : data; // Применение фильтра
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row bg-[#004E64]">
       <PsychologistFilter
         setFilter={setFilter}
         openFilter={openFilter}
         setOpenFilter={setOpenFilter}
       />
-      <div>
-        <button
-          onClick={() => setOpenFilter(!openFilter)}
-          className="fixed bottom-10 right-10 rounded-full border-fuchsia-400 border-2 bg-white shadow-green-pon z-50"
-        >
-          <img src={FilterIcon} alt="Filter" width={45} />
-        </button>
-      </div>
+      <div className=" hidden  w-[15%] lg:block "></div>
+      <button
+        onClick={() => setOpenFilter(!openFilter)}
+        className="fixed bottom-10 right-10 rounded-full border-fuchsia-400 border-2 bg-white shadow-green-pon z-50"
+      >
+        <img src={FilterIcon} alt="Filter" width={45} />
+      </button>
 
-      <div className="flex flex-col items-center w-full gap-y-6">
+      <div className="flex flex-col items-center w-[85%] gap-y-6">
         {filteredData &&
           filteredData.map((psy) => (
-            <div key={psy.$id}>
-              <PsychologistItem info={psy} />
-            </div>
+            <PsychologistItem info={psy} key={psy.$id} />
           ))}
       </div>
     </div>
