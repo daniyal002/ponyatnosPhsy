@@ -13,6 +13,5 @@ export const useGetAllPsychologist = () => {
       },
     }
   );
-  console.log(data);
   return { data, isError, isLoading };
 };

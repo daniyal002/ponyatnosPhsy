@@ -3,19 +3,37 @@ import PsychologistItem from "./components/PsychologistItem";
 import { useGetAllPsychologist } from "./hook/useGetAllPsychologist";
 import PsychologistFilter from "./components/PsychologistFilter";
 import FilterIcon from "../../assets/icon/filter.svg";
+import useQuizStore from "../Quiz/quizStore";
 
 const PsychologistList = () => {
   const { data } = useGetAllPsychologist();
   const [filter, setFilter] = useState({}); // 1. Состояние для фильтрации
   const [openFilter, setOpenFilter] = useState(false);
-  useEffect(() => {
-    console.log(filter);
-  }, [filter]);
+  const { answers } = useQuizStore();
 
-  const filteredData = data ? applyFilter(data, filter) : data; // Применение фильтра
+  let combinedFilter = {
+    ...answers,
+    ...filter,
+    specialization:
+      answers.specialization.length > 0
+        ? answers.specialization
+        : filter.specialization,
+    gender: answers.gender || filter.gender,
+    psychologicalApproach:
+      answers.psychologicalApproach || filter.psychologicalApproach,
+    age: filter.age || { min: 0, max: 100 },
+  };
+
+  useEffect(() => {
+    if (window.innerWidth > 1024) {
+      setOpenFilter(true);
+    } else setOpenFilter(false);
+  }, []);
+
+  const filteredData = data ? applyFilter(data, combinedFilter) : data;
 
   return (
-    <div className="flex flex-row bg-[#004E64]">
+    <div className="flex flex-row bg-[#004E64] justify-center">
       <PsychologistFilter
         setFilter={setFilter}
         openFilter={openFilter}
@@ -29,7 +47,7 @@ const PsychologistList = () => {
         <img src={FilterIcon} alt="Filter" width={45} />
       </button>
 
-      <div className="flex flex-col items-center w-[85%] gap-y-6">
+      <div className="flex flex-col items-center w-[100%] gap-y-6">
         {filteredData &&
           filteredData.map((psy) => (
             <PsychologistItem info={psy} key={psy.$id} />
@@ -61,13 +79,26 @@ const applyFilter = (data, filter) => {
             psy.specialization.$values.includes(s)
           )));
 
-    return genderFilter && ageFilter && specializationFilter;
+    const psychologicalApproachFilter =
+      !filter.psychologicalApproach ||
+      (psy.psychologicalApproach &&
+        Array.isArray(psy.psychologicalApproach.$values) &&
+        (filter.psychologicalApproach.length === 0 ||
+          filter.psychologicalApproach.some((s) =>
+            psy.psychologicalApproach.$values.includes(s)
+          )));
+
+    return (
+      genderFilter &&
+      ageFilter &&
+      specializationFilter &&
+      psychologicalApproachFilter
+    );
   });
 };
 
 const getAge = (birthDate) => {
   const today = new Date();
   const birth = new Date(birthDate);
-  console.log(today.getFullYear() - birth.getFullYear());
   return today.getFullYear() - birth.getFullYear();
 };

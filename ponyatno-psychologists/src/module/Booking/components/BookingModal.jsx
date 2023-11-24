@@ -22,12 +22,17 @@ const BookingModal = ({
   const { mutate, err } = useSetBooking();
 
   const submitHandler = (body) => {
+    const bookingDayOfWeek = new Date(dayOfWeek).getDay();
+    const parts = dayOfWeek.toLocaleDateString().split(".");
+    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+
     const updateBody = {
       ...body,
       userId: data.userId,
       startTime: startTime.toLocaleTimeString("en-US", { hour12: false }),
       endTime: endTime.toLocaleTimeString("en-US", { hour12: false }),
-      bookingDay: dayOfWeek.toISOString().split("T")[0],
+      bookingDayOfWeek:bookingDayOfWeek,
+      bookingDay: formattedDate,
       psychologistProfileId: psychologistProfileId,
     };
     mutate(updateBody);

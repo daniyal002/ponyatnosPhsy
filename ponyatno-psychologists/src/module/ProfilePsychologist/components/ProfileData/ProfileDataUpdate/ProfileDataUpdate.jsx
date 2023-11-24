@@ -3,20 +3,16 @@ import { useForm } from "react-hook-form";
 import { useGetProfileById } from "../../../hook/useGetProfileById";
 import { useUpdatetProfileById } from "../../../hook/useUpdatetProfileById";
 import Select from "react-select";
+import {
+  optionsSpecialization,
+  optionsPsychologicalApproach,
+} from "../../../../../helper/listOptions";
 
 const ProfileDataUpdate = ({ isModalOpen, setModalOpen, role }) => {
   const { data } = useGetProfileById();
   const { mutate, error } = useUpdatetProfileById();
   const [selectSpecialization, setSelectSpecialization] = useState([]);
   const [selected, setSelected] = useState([]);
-
-  const options = [
-    { value: "Специализация1", label: "Специализация1" },
-    { value: "Специализация2", label: "Специализация2" },
-    { value: "Специализация3", label: "Специализация3" },
-    { value: "Специализация4", label: "Специализация4" },
-    { value: "Специализация5", label: "Специализация5" },
-  ];
 
   const handleSelectSpecialization = (selectedOptions) => {
     setSelected(selectedOptions);
@@ -26,14 +22,6 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen, role }) => {
 
   const [selectPsychologicalApproach, setPsychologicalApproach] = useState([]);
   const [selectedPA, setSelectedPA] = useState([]);
-
-  const optionsPsychologicalApproach = [
-    { value: "Подход1", label: "Подход1" },
-    { value: "Подход2", label: "Подход2" },
-    { value: "Подход3", label: "Подход3" },
-    { value: "Подход4", label: "Подход4" },
-    { value: "Подход5", label: "Подход5" },
-  ];
 
   const handlePsychologicalApproach = (selectedOptions) => {
     setSelectedPA(selectedOptions);
@@ -179,7 +167,7 @@ const ProfileDataUpdate = ({ isModalOpen, setModalOpen, role }) => {
                     </label>
                     <Select
                       name="specialization"
-                      options={options}
+                      options={optionsSpecialization}
                       isMulti
                       onChange={handleSelectSpecialization}
                       value={selected}

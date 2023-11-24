@@ -14,7 +14,7 @@ const ProfilePsychologist = () => {
     return (
       <div className="flex  flex-col justify-between ">
         {/* <Sidebar open={open} setOpen={setOpen} /> */}
-        <div className="flex gap-x-3 justify-center bg-[#004E64] p-3">
+        <div className="flex flex-col gap-x-3 gap-y-3 justify-center bg-[#004E64] p-3 md:flex-row">
           <button
             onClick={() => {
               setOpenProfile(true);
@@ -59,7 +59,7 @@ const ProfilePsychologist = () => {
     return (
       <div className="flex  flex-col justify-between ">
         {/* <Sidebar open={open} setOpen={setOpen} /> */}
-        <div className="flex gap-x-3 justify-center bg-[#004E64] p-3">
+        <div className="flex flex-col gap-x-3 gap-y-3 justify-center bg-[#004E64] p-3 md:flex-row">
           <button
             onClick={() => {
               setOpenProfile(true);
@@ -104,7 +104,7 @@ const ProfilePsychologist = () => {
     return (
       <div className="flex  flex-col justify-between ">
         {/* <Sidebar open={open} setOpen={setOpen} /> */}
-        <div className="flex gap-x-3 justify-center bg-[#004E64] p-3">
+        <div className="flex flex-col gap-x-3 gap-y-3 justify-center bg-[#004E64] p-3 md:flex-row">
           <button
             onClick={() => {
               setOpenProfile(true);

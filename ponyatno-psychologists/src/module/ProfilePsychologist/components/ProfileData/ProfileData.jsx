@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { useGetProfileById } from "../../hook/useGetProfileById";
 import ProfileDataUpdate from "./ProfileDataUpdate/ProfileDataUpdate";
 import Avatar from "../Avatar/Avatar";
@@ -19,7 +19,7 @@ const ProfileData = () => {
             setModalOpen={setModalOpen}
             role={data.userRole}
           />
-          <div className="flex flex-col items-center w-[100%]">
+          <div className="flex flex-col items-center w-[100%] bg-white">
             <div className="bg-[#004E64] w-full">
               <div className="flex flex-col items-center m-[40px] md:m-[100px] md:flex-row">
                 <Avatar />
@@ -36,15 +36,15 @@ const ProfileData = () => {
               </div>
             </div>
 
-            <div className="flex flex-col justify-center items-start xs:items-center gap-y-[24px] max-w-[1200px] m-[40px] md:my-8 w-full">
+            <div className="flex flex-col justify-center items-start xs:items-center gap-y-[24px] max-w-[1200px] m-[40px] md:my-8 w-full  ">
               <div className="w-full md:w-1/2">
                 <img src="" alt="" />
-                <h3 className="text-[32px] font-light  md:text-[43px]">
+                <h3 className="text-[32px] font-light  md:text-[43px] mx-3 w-[80%] ">
                   Ваши данные
                 </h3>
               </div>
 
-              <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+              <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                 <p className="profile-text">
                   <span className="profile-textHeader">Имя</span>
                   <span className="text-[16px]">{data.firstName} </span>
@@ -55,7 +55,7 @@ const ProfileData = () => {
                 </p>
               </div>
 
-              <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+              <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                 <p className="profile-text">
                   <span className="profile-textHeader">E-mail</span>{" "}
                   <span className="text-[16px]">{data.userEmail} </span>
@@ -68,14 +68,14 @@ const ProfileData = () => {
                 </p>
               </div>
 
-              <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+              <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                 <p className="profile-text">
-                  <span className="profile-textHeader">Телефон</span>{" "}
+                  <span className="profile-textHeader">Телефон</span>
                   <span className="text-[16px]">{data.phone} </span>
                 </p>
                 {data.userRole !== "User" && (
                   <p className="profile-text">
-                    <span className="profile-textHeader">Специализация</span>{" "}
+                    <span className="profile-textHeader">Специализация</span>
                     <span className="flex flex-wrap  ">
                       {data.specialization &&
                         data.specialization.$values.map((spec, index) => (
@@ -90,7 +90,7 @@ const ProfileData = () => {
 
               {data.userRole !== "User" && (
                 <>
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Психологический подход
@@ -117,20 +117,20 @@ const ProfileData = () => {
                     </p>
                   </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
-                      <span className="profile-textHeader">Опыт работы</span>{" "}
+                      <span className="profile-textHeader">Опыт работы</span>
                       <span className="text-[16px]">
-                        {data.yearsOfExperience}{" "}
+                        {data.yearsOfExperience}
                       </span>
                     </p>
                     <p className="profile-text">
-                      <span className="profile-textHeader">Место учебы</span>{" "}
+                      <span className="profile-textHeader">Место учебы</span>
                       <span className="text-[16px]">{data.educationPlace}</span>
                     </p>
                   </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">Год выпуска</span>{" "}
                       <span className="text-[16px]">
@@ -147,7 +147,7 @@ const ProfileData = () => {
                     </p>
                   </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Время перерыва между сеансом
@@ -162,7 +162,7 @@ const ProfileData = () => {
                     </p>
                   </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-full justify-start md:w-1/2 flex-col xs:flex-row">
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Сколько дней до начала записи

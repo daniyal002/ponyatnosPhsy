@@ -4,13 +4,10 @@ import { CSSTransition } from "react-transition-group";
 const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
-  useEffect(() => {
-    console.log(info.firstName);
-  }, [info]);
 
   return (
     <div className="flex flex-col max-w-[280px] xs:max-w-[700px] mt-1 backdrop-blur-xl bg-white/30 justify-center p-3  flex-wrap mx-auto   rounded-lg border-green-pon border-solid border-2 mb-7 gap-x-5">
-      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto ">
+      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto w-[300px]">
         <div>
           <img
             src="https://shapka-youtube.ru/wp-content/uploads/2020/12/man-ava1.jpg"
@@ -130,7 +127,7 @@ const PsychologistItem = ({ info }) => {
             <h6 className="text-[26px] text-green-pon font-semibold">
               Психологический подход
             </h6>
-            <div className="flex gap-x-8 justify-start">
+            <div className="flex gap-x-4 justify-start flex-wrap gap-y-4 ">
               {info.psychologicalApproach &&
                 info.psychologicalApproach.$values.map((approach, index) => (
                   <p
