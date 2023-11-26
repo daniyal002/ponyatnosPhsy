@@ -1,7 +1,7 @@
-import React from "react";
-import TableForB from "./tableForB";
-import WhyChooseUs from "./WhyChooseUs";
-import Footer from "../components/Footer";
+import React from 'react';
+import TableForB from './tableForB';
+import WhyChooseUs from './WhyChooseUs';
+import Warning from './Warning';
 
 const BusinessPsyholog = () => {
   return (
@@ -18,7 +18,7 @@ const BusinessPsyholog = () => {
             </h4>
             <form className="w-full items-stretch flex flex-col  gap-x-5 gap-y-5 md:flex-row md:items-start">
               <input
-                type="text"
+                type="email"
                 className="bg-[#eef0eb] px-5 rounded-lg h-[58px]  outline-none border-[1px] border-[#d9dbd7]  md:w-[40%]"
                 placeholder="E-mail"
               />
@@ -210,7 +210,9 @@ const BusinessPsyholog = () => {
       <section className="w-full bg-[#fef5b5]">
         <div className="max-w-[1200px]  mx-auto  flex flex-col items-center justify-center pt-[105px] pb-[105px] gap-y-[105px]">
           <div className="max-w-[760px] p-3 flex flex-col justify-center gap-y-[40px]">
-            <h2 className="text-[30px] md:text-[42px] text-[#171717] text-center">Услуги</h2>
+            <h2 className="text-[30px] md:text-[42px] text-[#171717] text-center">
+              Услуги
+            </h2>
             <p className="text-[20px] md:text-[26px] text-[#171717] font-light text-center">
               В рамках психологической поддержки сотрудников мы предоставляем
               следующие услуги психологов:
@@ -350,16 +352,7 @@ const BusinessPsyholog = () => {
           </div>
         </div>
       </section>
-      <section className="w-full bg-black">
-        <div className="max-w-[940px] py-[48px] xs:py-[32px] px-[16px] xs:px-[37px] mx-auto flex flex-col items-center">
-          <p className="text-white text-[19px]">
-            Если у вас серьезные, угрожающие вашей жизни проблемы, которые
-            требуют немедленного решения, вам лучше обратиться в какую-либо из
-            <span className="text-green-pon"> этих организаций</span>
-          </p>
-        </div>
-      </section>
-      <Footer />
+      <Warning />
     </div>
   );
 };

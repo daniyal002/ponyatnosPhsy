@@ -1,16 +1,14 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import SliderStartUSP from "../components/SliderStartUSP";
-import SliderStartCases from "../components/SliderStartCases";
-import FaqAccordion from "../components/FaqAccordion";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import SliderStartUSP from '../components/SliderStartUSP';
+import SliderStartCases from '../components/SliderStartCases';
+import FaqAccordion from '../components/FaqAccordion';
+import Warning from './Warning';
 
 const Main = () => {
   const navigate = useNavigate();
   return (
     <div className="h-screen w-full">
-      {/* <Header /> */}
       <section className="bg-[url('/images/bg.webp')] w-full bg-center bg-cover bg-no-repeat bg-fixed">
         <div className="max-w-[940px] h-screen mx-auto  flex items-center">
           <div className="max-w-[560px]  flex flex-col justify-center px-3 items-start gap-y-[30px]  ">
@@ -26,7 +24,7 @@ const Main = () => {
 
             <button
               className="bg-green-pon p-[0_68px] rounded-lg h-[50px] text-[17px] text-white uppercase font-semibold"
-              onClick={() => navigate("/quiz")}
+              onClick={() => navigate('/quiz')}
             >
               Начать
             </button>
@@ -59,7 +57,7 @@ const Main = () => {
           </p>
           <button
             className="bg-green-pon p-[0_52px] xs:p-[0_68px] rounded-lg h-[50px] xs:text-[17px] text-white  font-semibold mt-[16px] xs:mt-[44px]"
-            onClick={() => navigate("/allpsychologist")}
+            onClick={() => navigate('/allpsychologist')}
           >
             Подобрать психолога
           </button>
@@ -118,7 +116,7 @@ const Main = () => {
             <SliderStartCases />
             <button
               className="bg-white p-[0_52px] xs:p-[0_68px] rounded-lg h-[50px] xs:text-[17px] text-green-pon  font-semibold mt-[16px] xs:mt-[44px] "
-              onClick={() => navigate("/allpsychologist")}
+              onClick={() => navigate('/allpsychologist')}
             >
               Подобрать психолога
             </button>
@@ -147,7 +145,7 @@ const Main = () => {
             </div>
             <button
               className="bg-white p-[0_32px] xs:p-[0_42px] rounded-lg h-[50px] xs:text-[17px] text-green-pon  font-semibold mt-[16px] xs:mt-[44px] shadow-[0_0_4px_0] shadow-[#0003] "
-              onClick={() => navigate("/otzyvy")}
+              onClick={() => navigate('/otzyvy')}
             >
               Об отзывах
             </button>
@@ -171,16 +169,7 @@ const Main = () => {
         </div>
       </section>
 
-      <section className="w-full bg-black">
-        <div className="max-w-[940px] py-[48px] xs:py-[32px] px-[16px] xs:px-[37px] mx-auto flex flex-col items-center">
-          <p className="text-white text-[19px]">
-            Если у вас серьезные, угрожающие вашей жизни проблемы, которые
-            требуют немедленного решения, вам лучше обратиться в какую-либо из
-            <span className="text-green-pon"> этих организаций</span>
-          </p>
-        </div>
-      </section>
-      <Footer />
+      <Warning />
     </div>
   );
 };
