@@ -121,7 +121,12 @@ const ProfileData = () => {
                     <p className="profile-text">
                       <span className="profile-textHeader">Опыт работы</span>
                       <span className="text-[16px]">
-                        {data.yearsOfExperience}
+                        {data.yearsOfExperience}&nbsp;
+                        {Number(data.yearsOfExperience) === 1 && "Год"}
+                        {Number(data.yearsOfExperience) >= 2 &&
+                          Number(data.yearsOfExperience) <= 4 &&
+                          "Года"}
+                        {Number(data.yearsOfExperience) >= 5 && "Лет"}
                       </span>
                     </p>
                     <p className="profile-text">
@@ -134,7 +139,7 @@ const ProfileData = () => {
                     <p className="profile-text">
                       <span className="profile-textHeader">Год выпуска</span>{" "}
                       <span className="text-[16px]">
-                        {data.yearOfGraduation}
+                        {data.yearOfGraduation} год
                       </span>
                     </p>
                     <p className="profile-text">
@@ -142,7 +147,7 @@ const ProfileData = () => {
                         Время продолжительности одного сеанса
                       </span>
                       <span className="text-[16px]">
-                        {data.sessionDuration}
+                        {data.sessionDuration} минут
                       </span>
                     </p>
                   </div>
@@ -152,13 +157,15 @@ const ProfileData = () => {
                       <span className="profile-textHeader">
                         Время перерыва между сеансом
                       </span>
-                      <span className="text-[16px]">{data.breakDuration}</span>
+                      <span className="text-[16px]">
+                        {data.breakDuration} минут
+                      </span>
                     </p>
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Цена за один сеанс
                       </span>
-                      <span className="text-[16px]">{data.sessionPrice}</span>
+                      <span className="text-[16px]">{data.sessionPrice}₽</span>
                     </p>
                   </div>
 
@@ -168,7 +175,12 @@ const ProfileData = () => {
                         Сколько дней до начала записи
                       </span>
                       <span className="text-[16px]">
-                        {data.timeBeforeBooking}
+                        {data.timeBeforeBooking}{" "}
+                        {Number(data.timeBeforeBooking) === 1 && "День"}
+                        {Number(data.timeBeforeBooking) >= 2 &&
+                          Number(data.timeBeforeBooking) <= 4 &&
+                          "Дня"}
+                        {Number(data.timeBeforeBooking) >= 5 && "Дней"}
                       </span>
                     </p>
                   </div>

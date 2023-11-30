@@ -19,3 +19,12 @@ export const optionsGender = [
   { value: "Мужчина", label: "Мужской" },
   { value: "Женский", label: "Женский" },
 ];
+
+export const socialOptions = [
+  { value: "skype", label: "Skype" },
+  { value: "telegram", label: "Telegram" },
+  { value: "vk", label: "VK" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "viber", label: "Viber" },
+  // Добавьте другие социальные сети или мессенджеры по мере необходимости
+];

@@ -19,8 +19,8 @@ const Faq = () => {
       <section className="w-full">
         <div className="maw-w-[1200px] flex flex-col md:flex-row">
           <div
-            className="w-auto md:w-1/2 bg-[#6096d0] p-[20px] lg:p-[40px] flex flex-col gap-y-[14px] max-w-[750px] cursor-pointer"
-            onClick={() => navigate('/')}
+            className="w-auto md:w-1/2 bg-[#6096d0] p-[20px] lg:p-[40px] flex flex-col gap-y-[14px]  cursor-pointer"
+            onClick={() => navigate('/howitworks')}
           >
             <p className="uppercase text-[#f0f0f0] text-[12px] tracking-[2.5px] font-semibold">
               Читать
@@ -35,7 +35,7 @@ const Faq = () => {
           </div>
 
           <div
-            className="w-auto md:w-1/2 bg-green-pon p-[20px] lg:p-[40px] flex flex-col items-end gap-y-[14px] max-w-[750px] cursor-pointer"
+            className="w-auto md:w-1/2 bg-green-pon p-[20px] lg:p-[40px] flex flex-col items-end gap-y-[14px]  cursor-pointer"
             onClick={() => navigate('/otzyvy')}
           >
             <p className="uppercase text-[#f0f0f0] text-[12px] tracking-[2.5px] font-semibold">

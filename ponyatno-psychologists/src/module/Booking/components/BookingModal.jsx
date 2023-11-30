@@ -2,6 +2,8 @@ import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useSetBooking } from "../hook/useSetBooking";
 import { useGetProfileById } from "../../ProfilePsychologist/hook/useGetProfileById";
+import Select from "react-select";
+import { socialOptions } from "../../../helper/listOptions";
 
 const BookingModal = ({
   isOpen,
@@ -10,10 +12,14 @@ const BookingModal = ({
   endTime,
   dayOfWeek,
   psychologistProfileId,
+  firstName,
+  lastName,
 }) => {
   const {
     handleSubmit,
     control,
+    register,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -26,14 +32,21 @@ const BookingModal = ({
     const parts = dayOfWeek.toLocaleDateString().split(".");
     const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
 
+    const selectedSocialNetwork = body.socialNetwork.value;
+    const nicknameOrNumber = body.nicknameOrNumber;
+    const combinedString = `${selectedSocialNetwork} ${nicknameOrNumber}`;
+
     const updateBody = {
       ...body,
       userId: data.userId,
       startTime: startTime.toLocaleTimeString("en-US", { hour12: false }),
       endTime: endTime.toLocaleTimeString("en-US", { hour12: false }),
-      bookingDayOfWeek:bookingDayOfWeek,
+      bookingDayOfWeek: bookingDayOfWeek,
       bookingDay: formattedDate,
       psychologistProfileId: psychologistProfileId,
+      BookingPsychologistName: firstName,
+      BookingPsychologistLastName: lastName,
+      communicationMethod: combinedString,
     };
     mutate(updateBody);
     console.log(updateBody);
@@ -67,6 +80,7 @@ const BookingModal = ({
                   <Controller
                     name="bookingClientName"
                     control={control}
+                    shouldValidate={true}
                     rules={{ required: "Имя обязательно" }}
                     render={({ field }) => (
                       <input
@@ -92,6 +106,7 @@ const BookingModal = ({
                   <Controller
                     name="bookingClientLastName"
                     control={control}
+                    shouldValidate={true}
                     rules={{ required: "Фамилия обязательно" }}
                     render={({ field }) => (
                       <input
@@ -103,9 +118,9 @@ const BookingModal = ({
                       />
                     )}
                   />
-                  {errors.bookingClientName && (
+                  {errors.bookingClientLastName && (
                     <span className="text-red-500">
-                      {errors.bookingClientName.message}
+                      {errors.bookingClientLastName.message}
                     </span>
                   )}
                 </div>
@@ -117,6 +132,7 @@ const BookingModal = ({
                   <Controller
                     name="bookingClientPhone"
                     control={control}
+                    shouldValidate={true}
                     rules={{ required: "Телефон обязательно" }}
                     render={({ field }) => (
                       <input
@@ -128,9 +144,9 @@ const BookingModal = ({
                       />
                     )}
                   />
-                  {errors.bookingClientName && (
+                  {errors.bookingClientPhone && (
                     <span className="text-red-500">
-                      {errors.bookingClientName.message}
+                      {errors.bookingClientPhone.message}
                     </span>
                   )}
                 </div>
@@ -139,26 +155,37 @@ const BookingModal = ({
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Способ связи
                   </label>
-                  <Controller
-                    name="communicationMethod"
-                    control={control}
-                    rules={{ required: "Способ связи обязателен" }}
-                    render={({ field }) => (
-                      <input
-                        {...field}
-                        type="text"
-                        className="input-text"
-                        placeholder="Введите cпособ связи"
-                      />
-                    )}
-                  />
-                  {errors.bookingClientName && (
+                  <div className="flex items-center">
+                    <Controller
+                      name="socialNetwork"
+                      control={control}
+                      defaultValue={socialOptions[0]}
+                      render={({ field }) => (
+                        <Select
+                          {...field}
+                          options={socialOptions}
+                          isSearchable={false}
+                          onChange={(selectedOption) => {
+                            setValue("socialNetwork", selectedOption);
+                          }}
+                        />
+                      )}
+                    />
+                    <input
+                      type="text"
+                      {...register("nicknameOrNumber", {
+                        required: "Обязательное поле",
+                      })}
+                      placeholder="Введите ник или номер"
+                      className="input-text ml-2"
+                    />
+                  </div>
+                  {errors.communicationMethod && (
                     <span className="text-red-500">
-                      {errors.bookingClientName.message}
+                      {errors.communicationMethod.message}
                     </span>
                   )}
                 </div>
-
                 {/* Добавьте остальные поля формы по аналогии */}
 
                 <div className="mt-6 text-center">

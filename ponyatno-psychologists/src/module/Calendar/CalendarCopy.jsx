@@ -83,7 +83,6 @@ const Calendar = ({
     const dayOfWeek = availability.map(
       (day) => day.psychologistAvailabilityDto.$values[0].dayOfWeek
     );
-    const isWorkingDay = dayOfWeek.includes(day);
 
     // Устанавливаем рабочее время для понедельника (или другого дня) здесь
     const workingHoursByDay = {
@@ -114,7 +113,7 @@ const Calendar = ({
       }
     });
 
-    console.log(workingHoursByDay);
+
     if (availability) {
       const workingHours = workingHoursByDay[day];
 
@@ -128,7 +127,6 @@ const Calendar = ({
     }
 
     return (
-      isWorkingHours &&
       !isWeekend(selectedDate) &&
       selectedDateWithoutTime >= currentDate
     );

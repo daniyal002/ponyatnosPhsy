@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "../../Calendar/Calendar";
 import { CSSTransition } from "react-transition-group";
+import CalendarCopy from "../../Calendar/CalendarCopy";
 const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -61,12 +62,15 @@ const PsychologistItem = ({ info }) => {
             classNames="alert"
           >
             <div>
-              <Calendar
+              <CalendarCopy
                 availability={info.psychologistProfiles.$values}
                 breakDuration={info.breakDuration}
                 sessionDuration={info.sessionDuration}
                 timeBeforeBooking={info.timeBeforeBooking}
                 psychologistProfileId={info.psychologistId}
+                firstName={info.firstName}
+                lastName={info.lastName}
+                bookingsDto={info.bookingsDto.$values}
               />
             </div>
           </CSSTransition>

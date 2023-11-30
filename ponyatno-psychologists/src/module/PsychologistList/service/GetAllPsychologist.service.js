@@ -5,13 +5,12 @@ const token = Cookies.get("token");
 axios.defaults.baseURL = "http://212.118.52.175:8080";
 
 const GetAllPsychologist = async () => {
-  return axios
-    .get("/api/Profile/GetAllPsychologist", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((response) => {
-      return response.data.$values;
-    });
+  console.log(token)
+    return await axios
+      .get("/api/Profile/GetAllPsychologist", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => response.data.$values);
 };
 
 export { GetAllPsychologist };

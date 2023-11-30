@@ -46,7 +46,7 @@ const MobileMenu = () => {
   const userMenuItems = generateMenuItems("User");
 
   return (
-    <header className="absolute bg-white w-full overflow-hidden">
+    <header className=" bg-white w-full overflow-hidden">
       <div className="container mx-auto flex items-center p-4 justify-around w-100">
         <div className="">
           <Link to="/">

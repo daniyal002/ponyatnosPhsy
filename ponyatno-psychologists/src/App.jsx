@@ -20,12 +20,13 @@ import Semejnyjpsihologonlajn from "./staticPage/semejnyj-psiholog-onlajn";
 import Vacancy from "./staticPage/vacancy";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Howitworks from "./staticPage/howitworks";
 
 function App() {
   return (
     <>
       <BrowserRouter>
-        {/* <Header /> */}
+        <Header />
         <Routes>
           <Route path="auth/" element={<RegistrationAndAuthorization />}>
             <Route path="login" element={<Authorization />} />
@@ -64,6 +65,7 @@ function App() {
             element={<Semejnyjpsihologonlajn />}
           />
           <Route path="vacancy" element={<Vacancy />} />
+          <Route path="howitworks" element={<Howitworks />} />
         </Routes>
         {/* <Footer/> */}
       </BrowserRouter>

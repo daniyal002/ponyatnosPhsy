@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 export const useGetAllPsychologist = () => {
   const navigate = useNavigate();
-  const { data, isError, isLoading } = useQuery(
+
+  var { data, isError, isLoading } = useQuery(
     ["GetAllPsychologist"],
     () => GetAllPsychologist(),
     {

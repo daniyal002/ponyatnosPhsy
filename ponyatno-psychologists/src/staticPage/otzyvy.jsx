@@ -1,6 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-import React from 'react';
-import Warning from './Warning';
+import { useNavigate } from "react-router-dom";
+import React from "react";
+import Warning from "./Warning";
 
 const Otzyvy = () => {
   const navigate = useNavigate();
@@ -97,8 +97,8 @@ const Otzyvy = () => {
       <section className="w-full">
         <div className="maw-w-[1200px] flex flex-col md:flex-row">
           <div
-            className="w-auto md:w-1/2 bg-[#6096d0] p-[20px] lg:p-[40px] flex flex-col gap-y-[14px] max-w-[750px] cursor-pointer"
-            onClick={() => navigate('/')}
+            className="w-auto md:w-1/2 bg-[#6096d0] p-[20px] lg:p-[40px] flex flex-col gap-y-[14px] cursor-pointer"
+            onClick={() => navigate("/howitworks")}
           >
             <p className="uppercase text-[#f0f0f0] text-[12px] tracking-[2.5px] font-semibold">
               Читать
@@ -113,8 +113,8 @@ const Otzyvy = () => {
           </div>
 
           <div
-            className="w-auto md:w-1/2 bg-green-pon p-[20px] lg:p-[40px] flex flex-col items-end gap-y-[14px] max-w-[750px] cursor-pointer"
-            onClick={() => navigate('/faq')}
+            className="w-auto md:w-1/2 bg-green-pon p-[20px] lg:p-[40px] flex flex-col items-end gap-y-[14px] cursor-pointer"
+            onClick={() => navigate("/faq")}
           >
             <p className="uppercase text-[#f0f0f0] text-[12px] tracking-[2.5px] font-semibold">
               Читать
