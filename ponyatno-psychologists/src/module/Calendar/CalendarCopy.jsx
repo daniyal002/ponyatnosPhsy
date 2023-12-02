@@ -1,135 +1,134 @@
-import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { registerLocale } from "react-datepicker";
-import ru from "date-fns/locale/ru";
-import { addDays } from "date-fns";
-import BookingModal from "../Booking/components/BookingModal";
+import React, { useState, useEffect, useMemo, useRef } from 'react';
+import { startOfWeek, addDays, format, isAfter, add, parse } from 'date-fns';
+import ru from 'date-fns/locale/ru';
+import { useForm } from 'react-hook-form';
+import BookingModal from '../Booking/components/BookingModal';
 
-registerLocale("ru", ru);
-
-const Calendar = ({
-  availability,
-  breakDuration,
-  sessionDuration,
-  timeBeforeBooking,
+const CalendarCopy = ({
+  availabilityData,
   psychologistProfileId,
   firstName,
   lastName,
-  bookingsDto
+  bookingsDto,
 }) => {
   useEffect(() => {
-    console.log(
-      "Calendar",
-      availability[0].psychologistAvailabilityDto.$values[0]
-    );
+    console.log(bookingsDto);
   }, []);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [timeInterval, setTimeInterval] = useState(60);
-  const [timeBefore, setTimeBefore] = useState();
+
+  const { register, handleSubmit } = useForm();
+  const [week, setWeek] = useState([]);
+  const [timeSlots, setTimeSlots] = useState([]);
+  const [breakingDSO, setBreakingDSO] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    console.log(breakDuration, sessionDuration);
-    const intBreakDuration = Number(breakDuration);
-    const intSessionDuration = Number(sessionDuration);
-    const summTimeInterval = intBreakDuration + intSessionDuration;
-    setTimeInterval(summTimeInterval);
-    setTimeBefore(Number(timeBeforeBooking));
-    console.log(bookingsDto)
-  }, []);
-
-  const isWeekend = (date) => {
-    const day = date.getDay();
-    const dayOfWeek =
-      availability &&
-      availability.map(
-        (day) => day.psychologistAvailabilityDto.$values[0].dayOfWeek
-      );
-    return dayOfWeek && !dayOfWeek.includes(day);
-  };
-
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    setStartTime(null); // Сбрасываем время при изменении даты
-    setEndTime(null); // Сбрасываем время при изменении даты
-  };
-
-  const handleStartTimeChange = (time) => {
-    setStartTime(time);
-    // Автоматически устанавливаем endTime на 1 час после startTime
-    const newEndTime = new Date(time);
-    newEndTime.setHours(time.getHours() + 1);
-    setEndTime(newEndTime);
-  };
-
-  const handleEndTimeChange = (time) => {
-    setEndTime(time);
-  };
-
-  const filterPassedTime = (time) => {
-    if (!selectedDate || !availability) return false; // Проверяем, что selectedDate и availability определены
-
-    const currentDate = new Date();
-    const selectedDateWithoutTime = new Date(selectedDate);
-    selectedDateWithoutTime.setHours(time.getHours(), time.getMinutes());
-
-    const day = selectedDateWithoutTime.getDay();
-    const hours = selectedDateWithoutTime.getHours();
-
-    // Проверяем, что текущий день входит в dayOfWeek из данных доступности
-    const dayOfWeek = availability.map(
-      (day) => day.psychologistAvailabilityDto.$values[0].dayOfWeek
-    );
-
-    // Устанавливаем рабочее время для понедельника (или другого дня) здесь
-    const workingHoursByDay = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-    };
-
-    availability.forEach((item) => {
-      if (
-        item.psychologistAvailabilityDto.$values[0].dayOfWeek in
-        workingHoursByDay
-      ) {
-        workingHoursByDay[
-          item.psychologistAvailabilityDto.$values[0].dayOfWeek
-        ].push({
-          startTime: parseInt(
-            item.psychologistAvailabilityDto.$values[0].startTime.split(":")[0]
-          ),
-          endTime: parseInt(
-            item.psychologistAvailabilityDto.$values[0].endTime.split(":")[0]
-          ),
-        });
-      }
+    const newBreakingDSO = bookingsDto.map((item) => {
+      return {
+        id: item.id,
+        dayOfWeek: item.bookingDayOfWeek,
+        day: item.bookingDay.split('T')[0],
+        startTime: item.startTime,
+        endTime: item.endTime,
+      };
     });
 
+    const newTimeSlots = availabilityData.map((item) => {
+      const availabilityDto = item.psychologistAvailabilityDto.$values[0];
+      return {
+        id: availabilityDto.id,
+        dayOfWeek: availabilityDto.dayOfWeek,
+        startTime: availabilityDto.startTime,
+        endTime: availabilityDto.endTime,
+      };
+    });
 
-    if (availability) {
-      const workingHours = workingHoursByDay[day];
+    setTimeSlots((prevTimeSlots) => [...prevTimeSlots, ...newTimeSlots]);
+    setBreakingDSO((prevBreakingDso) => [
+      ...prevBreakingDso,
+      ...newBreakingDSO,
+    ]);
+  }, [availabilityData]);
 
-      return (
-        dayOfWeek.includes(day) &&
-        workingHours.some((interval) => {
-          return hours >= interval.startTime && hours < interval.endTime;
-        }) &&
-        selectedDateWithoutTime >= currentDate
-      );
+  useEffect(() => {
+    const newWeek = Array.from({ length: 7 }, (_, index) => {
+      const nextDay = format(add(new Date(), { days: index + 1 }), 'PPPP', {
+        locale: ru,
+      });
+      // Находим временной слот для текущего дня
+      const dayOfWeek = index;
+      const timeSlot =
+        timeSlots && timeSlots.find((slot) => slot.dayOfWeek === dayOfWeek);
+
+      const buttons = timeSlot
+        ? generateTimeButtons(timeSlot.startTime, timeSlot.endTime, nextDay)
+        : [];
+
+      return {
+        day: nextDay,
+        timeSlot: timeSlot || null,
+        buttons,
+      };
+    });
+
+    setWeek(newWeek);
+  }, [timeSlots]);
+
+  const generateTimeButtons = (startTime, endTime) => {
+    const buttons = [];
+    const formatTime = (time) => format(time, 'HH:mm');
+
+    let currentTime = new Date(`01/01/2000 ${startTime}`);
+    const endTimeDate = new Date(`01/01/2000 ${endTime}`);
+
+    while (currentTime <= endTimeDate) {
+      const time = formatTime(currentTime);
+      buttons.push(time);
+      currentTime = add(currentTime, { minutes: 60 });
     }
 
-    return (
-      !isWeekend(selectedDate) &&
-      selectedDateWithoutTime >= currentDate
+    return buttons;
+  };
+
+  const [day, setDay] = useState();
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
+  const [dayOfWeek, setDayOfWeek] = useState();
+
+  const handleButton = (day, time) => {
+    setIsModalOpen(true);
+    const parsedDate = parse(day, 'EEEE, d MMMM yyyy г.', new Date(), {
+      locale: ru,
+    });
+    // Используем функцию format для вывода значений
+    const dayOfMonthAndYear = format(parsedDate, 'yyyy-MM-dd', { locale: ru }); // день месяца, месяц и год, например, "4 декабря 2023 г."
+
+    // Получаем числовые значения
+    const numericDayOfWeek = parseInt(format(parsedDate, 'i', { locale: ru })); // 1 - понедельник, 2 - вторник, и так далее
+
+    setDay(dayOfMonthAndYear);
+    setStartTime(format(new Date(`01/01/2000 ${time}`), 'HH:mm'));
+    setEndTime(
+      format(add(new Date(`01/01/2000 ${time}`), { hours: 1 }), 'HH:mm')
     );
+    setDayOfWeek(numericDayOfWeek);
+  };
+
+  const onSubmit = (data) => {};
+
+  const isTimeSlotBooked = (day, time, breakingDSO) => {
+    const parsedDate = parse(day, 'EEEE, d MMMM yyyy г.', new Date(), {
+      locale: ru,
+    });
+
+    const dayOfMonthAndYear = format(parsedDate, 'yyyy-MM-dd', { locale: ru });
+
+    const formattedTime = time + ':00';
+
+    const bookedSlot = breakingDSO.find(
+      (slot) =>
+        slot.day === dayOfMonthAndYear && slot.startTime === formattedTime
+    );
+    return !!bookedSlot;
   };
 
   return (
@@ -140,93 +139,41 @@ const Calendar = ({
         psychologistProfileId={psychologistProfileId}
         startTime={startTime}
         endTime={endTime}
-        dayOfWeek={selectedDate}
+        dayOfWeek={dayOfWeek}
+        day={day}
         firstName={firstName}
         lastName={lastName}
       />
-      <div className="flex flex-col gap-y-5 items-center">
-        <h2 className="w-[300px] text-center text-white">
-          Выберите подходящий день для бронирования:
-        </h2>
-
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="dd/MM/yyyy"
-            filterTime={filterPassedTime}
-            locale="ru"
-            shouldCloseOnSelect={false}
-            calendarStartDay={1}
-            placeholderText="Выберите дату"
-            excludeDates={[
-              ...Array.from({ length: 31 }, (_, i) => {
-                const currentDate = new Date();
-                currentDate.setDate(currentDate.getDate() + i);
-                return currentDate;
-              }).filter(isWeekend),
-            ]}
-            minDate={addDays(new Date(), timeBefore)}
-            maxDate={addDays(new Date(), 31)}
-            className="p-3 rounded-lg bg-green-pon placeholder:text-white outline-none text-white text-center"
-          />
+          <h2 className="text-white text-[24px]">Выберите свободное время</h2>
+          {week.map(({ day, timeSlot, buttons }, index) => (
+            <div key={index} className="flex flex-col gap-y-3 mb-3">
+              {timeSlot && <h3 className="text-white ">{day}</h3>}
+              {timeSlot && (
+                <div className="flex flex-wrap gap-3">
+                  {buttons.map(
+                    (time, buttonIndex) =>
+                      !isTimeSlotBooked(day, time, breakingDSO) && (
+                        <button
+                          key={buttonIndex}
+                          type="submit"
+                          name="selectedTime"
+                          onClick={() => handleButton(day, time)}
+                          className="bg-green-pon text-white p-2 rounded-lg shadow-sm shadow-white hover:shadow-[0] duration-500"
+                        >
+                          {time}
+                        </button>
+                      )
+                  )}
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-y-5 items-center">
-          <h2 className="w-[300px] text-center text-white">
-            Выберите подходящее время для бронирования:
-          </h2>
-          <div className="flex flex-col xs:flex-row">
-            <DatePicker
-              selected={startTime}
-              onChange={handleStartTimeChange}
-              filterTime={filterPassedTime}
-              showTimeSelect
-              showTimeSelectOnly
-              dateFormat="HH:mm"
-              timeIntervals={timeInterval}
-              locale="ru"
-              timeCaption="Начало"
-              shouldCloseOnSelect={false}
-              calendarStartDay={1}
-              placeholderText="Начало"
-              t
-              className="p-1 rounded-lg bg-green-pon placeholder:text-white outline-none text-white text-center "
-            />
-            -
-            <DatePicker
-              selected={endTime}
-              onChange={handleEndTimeChange}
-              showTimeSelect
-              showTimeSelectOnly
-              dateFormat="HH:mm"
-              locale="ru"
-              timeCaption="Конец"
-              shouldCloseOnSelect={false}
-              calendarStartDay={1}
-              placeholderText="Конец"
-              disabled
-              className="p-1 rounded-lg bg-green-pon placeholder:text-white outline-none text-white text-center"
-            />
-          </div>
-          {selectedDate ? (
-            <button
-              className="btn-default p-2 text-[14px] font-semibold"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Забронировать сеанс
-            </button>
-          ) : (
-            <button
-              className="btn-default p-2 text-[14px] font-semibold bg-gray-500 text-white hover:bg-gray-500"
-              disabled
-            >
-              Забронировать сеанс
-            </button>
-          )}
-        </div>
-      </div>
+      </form>
     </>
   );
 };
 
-export default Calendar;
+export default CalendarCopy;

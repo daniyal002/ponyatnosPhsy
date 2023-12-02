@@ -1,9 +1,9 @@
-import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { useSetBooking } from "../hook/useSetBooking";
-import { useGetProfileById } from "../../ProfilePsychologist/hook/useGetProfileById";
-import Select from "react-select";
-import { socialOptions } from "../../../helper/listOptions";
+import React, { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useSetBooking } from '../hook/useSetBooking';
+import { useGetProfileById } from '../../ProfilePsychologist/hook/useGetProfileById';
+import Select from 'react-select';
+import { socialOptions } from '../../../helper/listOptions';
 
 const BookingModal = ({
   isOpen,
@@ -11,6 +11,7 @@ const BookingModal = ({
   startTime,
   endTime,
   dayOfWeek,
+  day,
   psychologistProfileId,
   firstName,
   lastName,
@@ -27,22 +28,28 @@ const BookingModal = ({
 
   const { mutate, err } = useSetBooking();
 
-  const submitHandler = (body) => {
-    const bookingDayOfWeek = new Date(dayOfWeek).getDay();
-    const parts = dayOfWeek.toLocaleDateString().split(".");
-    const formattedDate = `${parts[2]}-${parts[1]}-${parts[0]}`;
+  const [socialNetwork, setSocialNetwork] = useState('');
+  const [nicknameOrNumber, setNicknameOrNumber] = useState('');
 
-    const selectedSocialNetwork = body.socialNetwork.value;
-    const nicknameOrNumber = body.nicknameOrNumber;
-    const combinedString = `${selectedSocialNetwork} ${nicknameOrNumber}`;
+  const handleSocialNetwork = (e) => {
+    setSocialNetwork(e.value);
+  };
+
+  const handleNicknameOrNumber = (e) => {
+    setNicknameOrNumber(e.target.value);
+  };
+
+  const submitHandler = (body) => {
+    console.log(startTime);
+    const combinedString = `${socialNetwork}: ${nicknameOrNumber}`;
 
     const updateBody = {
       ...body,
       userId: data.userId,
-      startTime: startTime.toLocaleTimeString("en-US", { hour12: false }),
-      endTime: endTime.toLocaleTimeString("en-US", { hour12: false }),
-      bookingDayOfWeek: bookingDayOfWeek,
-      bookingDay: formattedDate,
+      startTime: startTime + ':00',
+      endTime: endTime + ':00',
+      bookingDayOfWeek: dayOfWeek,
+      bookingDay: day + 'T17:00:38.725Z',
       psychologistProfileId: psychologistProfileId,
       BookingPsychologistName: firstName,
       BookingPsychologistLastName: lastName,
@@ -81,7 +88,7 @@ const BookingModal = ({
                     name="bookingClientName"
                     control={control}
                     shouldValidate={true}
-                    rules={{ required: "Имя обязательно" }}
+                    rules={{ required: 'Имя обязательно' }}
                     render={({ field }) => (
                       <input
                         {...field}
@@ -107,7 +114,7 @@ const BookingModal = ({
                     name="bookingClientLastName"
                     control={control}
                     shouldValidate={true}
-                    rules={{ required: "Фамилия обязательно" }}
+                    rules={{ required: 'Фамилия обязательно' }}
                     render={({ field }) => (
                       <input
                         {...field}
@@ -133,7 +140,7 @@ const BookingModal = ({
                     name="bookingClientPhone"
                     control={control}
                     shouldValidate={true}
-                    rules={{ required: "Телефон обязательно" }}
+                    rules={{ required: 'Телефон обязательно' }}
                     render={({ field }) => (
                       <input
                         {...field}
@@ -156,26 +163,15 @@ const BookingModal = ({
                     Способ связи
                   </label>
                   <div className="flex items-center">
-                    <Controller
-                      name="socialNetwork"
-                      control={control}
+                    <Select
+                      options={socialOptions}
+                      isSearchable={false}
                       defaultValue={socialOptions[0]}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          options={socialOptions}
-                          isSearchable={false}
-                          onChange={(selectedOption) => {
-                            setValue("socialNetwork", selectedOption);
-                          }}
-                        />
-                      )}
+                      onChange={handleSocialNetwork}
                     />
                     <input
                       type="text"
-                      {...register("nicknameOrNumber", {
-                        required: "Обязательное поле",
-                      })}
+                      onChange={handleNicknameOrNumber}
                       placeholder="Введите ник или номер"
                       className="input-text ml-2"
                     />

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import Calendar from "../../Calendar/Calendar";
-import { CSSTransition } from "react-transition-group";
-import CalendarCopy from "../../Calendar/CalendarCopy";
+import React, { useEffect, useState } from 'react';
+import Calendar from '../../Calendar/Calendar';
+import { CSSTransition } from 'react-transition-group';
+import CalendarCopy from '../../Calendar/CalendarCopy';
 const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
@@ -18,10 +18,12 @@ const PsychologistItem = ({ info }) => {
         </div>
         <div className="flex flex-col gap-y-4">
           <div className="flex gap-x-4 justify-center">
-            <p className="text-3xl font-semibold text-white">
+            <p className=" text-xl sm:text-3xl font-semibold text-white">
               {info.firstName}
             </p>
-            <p className="text-3xl font-semibold text-white">{info.lastName}</p>
+            <p className="text-xl sm:text-3xl font-semibold text-white">
+              {info.lastName}
+            </p>
           </div>
 
           <div>
@@ -63,10 +65,10 @@ const PsychologistItem = ({ info }) => {
           >
             <div>
               <CalendarCopy
-                availability={info.psychologistProfiles.$values}
-                breakDuration={info.breakDuration}
-                sessionDuration={info.sessionDuration}
-                timeBeforeBooking={info.timeBeforeBooking}
+                availabilityData={info.psychologistProfiles.$values}
+                // breakDuration={info.breakDuration}
+                // sessionDuration={info.sessionDuration}
+                // timeBeforeBooking={info.timeBeforeBooking}
                 psychologistProfileId={info.psychologistId}
                 firstName={info.firstName}
                 lastName={info.lastName}
