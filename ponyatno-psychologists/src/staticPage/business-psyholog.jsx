@@ -5,7 +5,7 @@ import Warning from './Warning';
 
 const BusinessPsyholog = () => {
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <section className="w-full bg-white">
         <div className="max-w-[1200px]  mx-auto  flex items-center pt-[105px] pb-[105px]">
           <div className="max-w-[860px]  flex flex-col justify-center mx-3 p-3 lg:pl-[100px] items-start gap-y-[45px]  ">
@@ -32,7 +32,7 @@ const BusinessPsyholog = () => {
           </div>
         </div>
       </section>
-      <section className="bg-[url('/images/bg_2.svg')] w-full h-[80%] bg-no-repeat bg-cover bg-fixed"></section>
+      <section className="bg-[url('/images/bg_2.svg')] w-full h-[60vh] lg:h-[80vh] bg-no-repeat bg-cover bg-fixed"></section>
 
       <section className="w-full bg-white">
         <div className="max-w-[1200px]  mx-auto  flex flex-col items-center justify-center pt-[105px] pb-[105px] gap-y-[105px]">

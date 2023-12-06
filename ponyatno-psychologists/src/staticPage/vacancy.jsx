@@ -1,12 +1,12 @@
-import React from 'react';
-import Warning from './Warning';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import Warning from "./Warning";
+import { useNavigate } from "react-router-dom";
 
 const Vacancy = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-screen">
+    <div className="h-screen">
       <section className="w-full bg-[#f0f0f0]">
         <div className="max-w-[1200px]  mx-auto  flex flex-col items-center justify-center pt-[105px] pb-[105px] gap-y-[105px]">
           <div className="max-w-[760px] p-3 flex flex-col justify-center gap-y-[20px]">
@@ -31,7 +31,7 @@ const Vacancy = () => {
 
               <button
                 className="text-green-pon text-[20px] text-left"
-                onClick={() => navigate('/')}
+                onClick={() => navigate("/")}
               >
                 Подробнее →
               </button>

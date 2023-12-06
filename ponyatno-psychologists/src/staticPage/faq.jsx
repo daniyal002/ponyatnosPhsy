@@ -7,7 +7,7 @@ const Faq = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full">
       <section className="w-full bg-white">
         <div className="max-w-[1200px] py-[48px] xs:py-[100px] px-[16px] xs:px-[37px] mx-auto flex flex-col items-center">
           <h2 className="text-[30px] md:text-[42px] font-semibold text-center mb-[20px] xs:mb-[40px]">

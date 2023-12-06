@@ -3,7 +3,7 @@ import Warning from './Warning';
 
 const Payment = () => {
   return (
-    <div className="w-full h-screen">
+    <div className="w-full">
       <section className="w-full bg-[#f0f0f0]">
         <div className="max-w-[1200px]  mx-auto  flex flex-col items-center justify-center pt-[105px] pb-[105px] gap-y-[105px]">
           <div className=" p-3 flex flex-col justify-center gap-y-[40px]">

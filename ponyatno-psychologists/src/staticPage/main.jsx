@@ -8,8 +8,8 @@ import Warning from './Warning';
 const Main = () => {
   const navigate = useNavigate();
   return (
-    <div className="h-screen w-full">
-      <section className="bg-[url('/images/bg.webp')] w-full bg-center bg-cover bg-no-repeat bg-fixed">
+    <div className="w-full">
+      <section className="bg-[url('/images/bg.webp')] w-full h-screen bg-center bg-cover bg-no-repeat bg-fixed">
         <div className="max-w-[940px] h-screen mx-auto  flex items-center">
           <div className="max-w-[560px]  flex flex-col justify-center px-3 items-start gap-y-[30px]  ">
             <div className="flex flex-col gap-y-[15px]">

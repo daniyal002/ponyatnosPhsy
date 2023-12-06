@@ -7,7 +7,7 @@ const Semejnyjpsihologonlajn = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <section className="bg-[url('/images/bgs.jpeg')] w-full bg-center bg-cover bg-no-repeat bg-fixed bg-[#575656] bg-blend-multiply ">
         <div className="max-w-[1200px]  h-max lg:h-screen  mx-auto  flex items-center">
           <div className="max-w-[760px]  flex flex-col justify-center px-3 items-start gap-y-[30px]">

@@ -6,7 +6,7 @@ const Psychologists = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full">
       <section className="w-full bg-[#f0f0f0]">
         <div className="max-w-[1200px]  mx-auto  flex justify-center items-center pt-[105px] pb-[105px]">
           <div className="max-w-[960px]  flex flex-col justify-center mx-3  items-center gap-y-[24px]  ">

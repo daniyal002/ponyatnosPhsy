@@ -6,7 +6,7 @@ const Otzyvy = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen w-full">
+    <div className="w-full">
       <section className="w-full bg-white">
         <div className="max-w-[1200px]  mx-auto  flex flex-col items-center justify-center pt-[105px] pb-[105px] gap-y-[105px]">
           <div className="max-w-[560px] p-3 flex flex-col justify-center gap-y-[40px]">
