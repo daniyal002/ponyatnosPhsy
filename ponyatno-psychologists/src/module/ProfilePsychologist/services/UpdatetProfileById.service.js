@@ -1,16 +1,18 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
 axios.defaults.baseURL = "http://212.118.52.175:8080";
 
-const UpdatetProfileById = async (body) => {
+const UpdatetProfileById = async (body, token) => {
   return axios
-    .post("/api/Profile/UpdateProfile", body, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
+    .post(
+      "/api/Profile/UpdateProfile",
+      { ...body, UserPhotoBase64: "", avatarImage: "" },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
     .then((response) => {
       return response.data;
     });

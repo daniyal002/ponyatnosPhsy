@@ -6,9 +6,7 @@ const Authorization = () => {
   const { register, handleSubmit } = useForm();
   const { mutate, error, status } = useAuthorization();
 
-  useEffect(() => {
-    console.log(status);
-  }, []);
+
 
   const authorization = (data) => {
     mutate({ ...data, loginEmail: "" });

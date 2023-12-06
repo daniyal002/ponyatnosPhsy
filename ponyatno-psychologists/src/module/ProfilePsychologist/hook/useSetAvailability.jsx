@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { SetAvailability } from "../services/SetAvailability.service";
+import useTokenStore from "../../../store/store";
 
 export const useSetAvailability = () => {
   const queryClient = useQueryClient();
   const [error, setError] = useState();
+  const token = useTokenStore((state) => state.token);
 
   const refreshData = () => {
     queryClient.invalidateQueries("useGetAvailability");
@@ -12,7 +14,7 @@ export const useSetAvailability = () => {
 
   const { mutate } = useMutation(
     ["useSetAvailability"],
-    (body) => SetAvailability(body),
+    (body) => SetAvailability(body, token),
     {
       onSuccess: () => {
         refreshData();

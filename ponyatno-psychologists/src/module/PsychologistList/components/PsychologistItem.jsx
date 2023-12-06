@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import Calendar from '../../Calendar/Calendar';
-import { CSSTransition } from 'react-transition-group';
-import CalendarCopy from '../../Calendar/CalendarCopy';
+import React, { useEffect, useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import CalendarCopy from "../../Calendar/CalendarCopy";
 const PsychologistItem = ({ info }) => {
   const [more, setMore] = useState(false);
   const [openCalendar, setOpenCalendar] = useState(false);
+  const base64ImageString = `data:image/jpeg;base64,${info.avatarImage}`;
+
+  const countByType = info.educationPlace.$values.reduce((acc, item) => {
+    const [type] = item.split(":");
+    acc[type] = (acc[type] || 0) + 1;
+    return acc;
+  }, {});
+
+ 
+  
 
   return (
     <div className="flex flex-col max-w-[280px] xs:max-w-[700px] mt-1 backdrop-blur-xl bg-white/30 justify-center p-3  flex-wrap mx-auto   rounded-lg border-green-pon border-solid border-2 mb-7 gap-x-5">
-      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto w-[300px]">
-        <div>
+      <div className="flex flex-col gap-y-5  items-center justify-center mx-auto w-full">
+        <div className="w-[250px] h-[250px] overflow-hidden flex justify-center">
           <img
-            src="https://shapka-youtube.ru/wp-content/uploads/2020/12/man-ava1.jpg"
+            src={
+              info.avatarImage
+                ? base64ImageString
+                : "https://shapka-youtube.ru/wp-content/uploads/2020/12/man-ava1.jpg"
+            }
             alt="Profile Photo"
-            className="w-[200px] rounded-3xl"
+            className="w-full h-auto object-cover rounded-3xl"
           />
         </div>
         <div className="flex flex-col gap-y-4">
@@ -92,7 +105,7 @@ const PsychologistItem = ({ info }) => {
             </div>
             <div className="flex items-center justify-center box-border rounded-lg w-[30%] sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
               <p className="flex flex-col text-[20px] font-bold text-white xs:text-[30px]">
-                1
+                {countByType.Диплом}
                 <span className="text-[14px] font-normal xs:text-[18px]">
                   Диплом психолога
                 </span>
@@ -100,7 +113,7 @@ const PsychologistItem = ({ info }) => {
             </div>
             <div className="flex items-center justify-center box-border  rounded-lg  w-[30%] sm:w-[200px] h-[110px] sm:h-[150px] bg-green-pon text-center py-[28px] duration-4000">
               <p className="flex flex-col text-[20px] font-bold text-white xs:text-[30px]">
-                3
+                {countByType.Сертификат}
                 <span className="text-[14px] font-normal xs:text-[18px]">
                   профильных курса
                 </span>

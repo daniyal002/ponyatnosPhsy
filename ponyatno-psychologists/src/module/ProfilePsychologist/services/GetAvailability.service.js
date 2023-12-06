@@ -1,10 +1,8 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
 axios.defaults.baseURL = "http://212.118.52.175:8080";
 
-const GetAvailability = async () => {
+const GetAvailability = async (token) => {
   return axios
     .get(
       "/api/PsychologistAvailability/GetAllAvailability",

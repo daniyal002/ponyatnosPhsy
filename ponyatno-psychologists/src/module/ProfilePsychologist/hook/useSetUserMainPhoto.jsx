@@ -1,21 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { SetBooking } from "../service/SetBooking.servive";
 import useTokenStore from "../../../store/store";
+import { SetUserMainPhoto } from "../services/SetUserMainPhoto.service";
 
-export const useSetBooking = () => {
+export const useSetUserMainPhoto = () => {
   const queryClient = useQueryClient();
-
   const [error, setError] = useState();
   const token = useTokenStore((state) => state.token);
 
   const refreshData = () => {
-    queryClient.invalidateQueries("GetAllPsychologist");
+    queryClient.invalidateQueries("useSetUserMainPhoto");
   };
 
-  const { mutate, isSuccess } = useMutation(
-    ["useSetBooking"],
-    (body) => SetBooking(body, token),
+  const { mutate } = useMutation(
+    ["useSetUserMainPhoto"],
+    (body) => SetUserMainPhoto(body, token),
     {
       onSuccess: () => {
         refreshData();
@@ -26,5 +25,5 @@ export const useSetBooking = () => {
       },
     }
   );
-  return { mutate, error, isSuccess };
+  return { mutate, error };
 };

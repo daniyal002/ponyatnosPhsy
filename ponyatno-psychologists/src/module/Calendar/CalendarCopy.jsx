@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { startOfWeek, addDays, format, isAfter, add, parse } from 'date-fns';
-import ru from 'date-fns/locale/ru';
-import { useForm } from 'react-hook-form';
-import BookingModal from '../Booking/components/BookingModal';
+import React, { useState, useEffect } from "react";
+import { format, add, parse } from "date-fns";
+import ru from "date-fns/locale/ru";
+import { useForm } from "react-hook-form";
+import BookingModal from "../Booking/components/BookingModal";
 
 const CalendarCopy = ({
   availabilityData,
@@ -11,11 +11,7 @@ const CalendarCopy = ({
   lastName,
   bookingsDto,
 }) => {
-  useEffect(() => {
-    console.log(bookingsDto);
-  }, []);
-
-  const { register, handleSubmit } = useForm();
+  const { handleSubmit } = useForm();
   const [week, setWeek] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
   const [breakingDSO, setBreakingDSO] = useState([]);
@@ -26,7 +22,7 @@ const CalendarCopy = ({
       return {
         id: item.id,
         dayOfWeek: item.bookingDayOfWeek,
-        day: item.bookingDay.split('T')[0],
+        day: item.bookingDay.split("T")[0],
         startTime: item.startTime,
         endTime: item.endTime,
       };
@@ -51,13 +47,21 @@ const CalendarCopy = ({
 
   useEffect(() => {
     const newWeek = Array.from({ length: 7 }, (_, index) => {
-      const nextDay = format(add(new Date(), { days: index + 1 }), 'PPPP', {
+      const nextDay = format(add(new Date(), { days: index + 1 }), "PPPP", {
         locale: ru,
       });
       // Находим временной слот для текущего дня
-      const dayOfWeek = index;
+
+      const parsedDate = parse(nextDay, "EEEE, d MMMM yyyy г.", new Date(), {
+        locale: ru,
+      });
+
+      const numericDayOfWeek = parseInt(
+        format(parsedDate, "i", { locale: ru })
+      );
       const timeSlot =
-        timeSlots && timeSlots.find((slot) => slot.dayOfWeek === dayOfWeek);
+        timeSlots &&
+        timeSlots.find((slot) => slot.dayOfWeek === numericDayOfWeek);
 
       const buttons = timeSlot
         ? generateTimeButtons(timeSlot.startTime, timeSlot.endTime, nextDay)
@@ -71,11 +75,11 @@ const CalendarCopy = ({
     });
 
     setWeek(newWeek);
-  }, [timeSlots]);
+  }, [timeSlots, week]);
 
   const generateTimeButtons = (startTime, endTime) => {
     const buttons = [];
-    const formatTime = (time) => format(time, 'HH:mm');
+    const formatTime = (time) => format(time, "HH:mm");
 
     let currentTime = new Date(`01/01/2000 ${startTime}`);
     const endTimeDate = new Date(`01/01/2000 ${endTime}`);
@@ -96,19 +100,19 @@ const CalendarCopy = ({
 
   const handleButton = (day, time) => {
     setIsModalOpen(true);
-    const parsedDate = parse(day, 'EEEE, d MMMM yyyy г.', new Date(), {
+    const parsedDate = parse(day, "EEEE, d MMMM yyyy г.", new Date(), {
       locale: ru,
     });
     // Используем функцию format для вывода значений
-    const dayOfMonthAndYear = format(parsedDate, 'yyyy-MM-dd', { locale: ru }); // день месяца, месяц и год, например, "4 декабря 2023 г."
+    const dayOfMonthAndYear = format(parsedDate, "yyyy-MM-dd", { locale: ru }); // день месяца, месяц и год, например, "4 декабря 2023 г."
 
     // Получаем числовые значения
-    const numericDayOfWeek = parseInt(format(parsedDate, 'i', { locale: ru })); // 1 - понедельник, 2 - вторник, и так далее
+    const numericDayOfWeek = parseInt(format(parsedDate, "i", { locale: ru })); // 1 - понедельник, 2 - вторник, и так далее
 
     setDay(dayOfMonthAndYear);
-    setStartTime(format(new Date(`01/01/2000 ${time}`), 'HH:mm'));
+    setStartTime(format(new Date(`01/01/2000 ${time}`), "HH:mm"));
     setEndTime(
-      format(add(new Date(`01/01/2000 ${time}`), { hours: 1 }), 'HH:mm')
+      format(add(new Date(`01/01/2000 ${time}`), { hours: 1 }), "HH:mm")
     );
     setDayOfWeek(numericDayOfWeek);
   };
@@ -116,13 +120,13 @@ const CalendarCopy = ({
   const onSubmit = (data) => {};
 
   const isTimeSlotBooked = (day, time, breakingDSO) => {
-    const parsedDate = parse(day, 'EEEE, d MMMM yyyy г.', new Date(), {
+    const parsedDate = parse(day, "EEEE, d MMMM yyyy г.", new Date(), {
       locale: ru,
     });
 
-    const dayOfMonthAndYear = format(parsedDate, 'yyyy-MM-dd', { locale: ru });
+    const dayOfMonthAndYear = format(parsedDate, "yyyy-MM-dd", { locale: ru });
 
-    const formattedTime = time + ':00';
+    const formattedTime = time + ":00";
 
     const bookedSlot = breakingDSO.find(
       (slot) =>
@@ -133,6 +137,7 @@ const CalendarCopy = ({
 
   return (
     <>
+      {}
       <BookingModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}

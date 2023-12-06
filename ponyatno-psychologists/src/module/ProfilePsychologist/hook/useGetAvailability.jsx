@@ -1,11 +1,12 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { GetAvailability } from "../services/GetAvailability.service";
+import useTokenStore from "../../../store/store";
 
 export const useGetAvailability = () => {
-  const queryClient = useQueryClient();
+  const token = useTokenStore((state) => state.token);
 
   const { data, isError, isLoading } = useQuery(["useGetAvailability"], () =>
-    GetAvailability()
+    GetAvailability(token)
   );
   console.log(data);
   return { data, isError, isLoading };

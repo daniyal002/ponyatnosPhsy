@@ -1,10 +1,8 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
 axios.defaults.baseURL = "http://212.118.52.175:8080";
 
-const getBookingList = async () => {
+const getBookingList = async (token) => {
   return axios
     .get("/api/Booking/GetBookingList", {
       headers: {

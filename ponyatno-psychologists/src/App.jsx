@@ -8,7 +8,6 @@ import PsychologistList from "./module/PsychologistList/PsychologistList";
 import SelectRole from "./module/RegistrationAndAuthorization/components/SelectRole/SelectRole";
 import QuizForm from "./module/Quiz/Quiz";
 import QuizCancel from "./module/Quiz/QuizCancel";
-import WordPressPage from "./staticPage/business-psyholog";
 import BusinessPsyholog from "./staticPage/business-psyholog";
 import Main from "./staticPage/main";
 import Detskijpsihologonlajn from "./staticPage/detskij-psiholog-onlajn";
@@ -27,6 +26,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header />
+
         <Routes>
           <Route path="auth/" element={<RegistrationAndAuthorization />}>
             <Route path="login" element={<Authorization />} />
@@ -40,14 +40,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="allpsychologist"
-            element={
-              <PrivateRoute>
-                <PsychologistList />
-              </PrivateRoute>
-            }
-          />
+          <Route path="allpsychologist" element={<PsychologistList />} />
           <Route path="quiz" element={<QuizForm />} />
           <Route path="quizcancel" element={<QuizCancel />} />
           <Route path="business" element={<BusinessPsyholog />} />
@@ -67,7 +60,7 @@ function App() {
           <Route path="vacancy" element={<Vacancy />} />
           <Route path="howitworks" element={<Howitworks />} />
         </Routes>
-        {/* <Footer/> */}
+        <Footer />
       </BrowserRouter>
     </>
   );

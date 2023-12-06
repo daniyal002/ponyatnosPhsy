@@ -82,7 +82,6 @@ const PsychologistFilter = ({ setFilter, openFilter, setOpenFilter }) => {
     if (window.innerWidth < 1024) {
       closeModal();
     }
-    console.log("updateData", updateData);
   };
 
   const closeModal = () => {
@@ -140,7 +139,6 @@ const PsychologistFilter = ({ setFilter, openFilter, setOpenFilter }) => {
                       name="age"
                       value={range}
                       onChange={(value) => setRange(value)}
-                      onChangeComplete={(value) => console.log(value)}
                     />
                   </div>
                 </div>

@@ -18,7 +18,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/howitworks"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Как это работает
@@ -26,7 +26,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/otzyvy"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Отзывы
@@ -40,7 +40,7 @@ const Footer = () => {
           <ul>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/business"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Бизнесу
@@ -48,7 +48,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/quiz"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Подбор психолога
@@ -56,7 +56,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/semejnyjpsihologonlajn"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Семейный психолог
@@ -64,7 +64,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/Detskijpsihologonlajn"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Детский психолог
@@ -72,7 +72,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/payment"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Оплата
@@ -91,7 +91,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/psychologists"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Психологам
@@ -99,7 +99,7 @@ const Footer = () => {
             </li>
             <li>
               <Link
-                to="/allpsychologist"
+                to="/vacancy"
                 className="text-[13px] text-green-pon hover:text-white duration-500"
               >
                 Вакансии

@@ -15,7 +15,6 @@ const QuizForm = ({ onSubmit }) => {
   const navigate = useNavigate();
 
   const handleAnswerChange = (questionNumber, answer) => {
-    console.log(answer);
     if (answer === "Я младше 18 лет") {
       navigate("/quizcancel");
     }
@@ -33,7 +32,6 @@ const QuizForm = ({ onSubmit }) => {
   };
 
   const submitForm = (data) => {
-    console.log("Form data:", data); // данные включают в себя ответы
     onSubmit(data);
     // navigate("/allpsychologist");
   };

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { useSetBooking } from '../hook/useSetBooking';
-import { useGetProfileById } from '../../ProfilePsychologist/hook/useGetProfileById';
-import Select from 'react-select';
-import { socialOptions } from '../../../helper/listOptions';
-
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useSetBooking } from "../hook/useSetBooking";
+import { useGetProfileById } from "../../ProfilePsychologist/hook/useGetProfileById";
+import Select from "react-select";
+import { socialOptions } from "../../../helper/listOptions";
+import useTokenStore from "../../../store/store";
+import { useNavigate } from "react-router-dom";
 const BookingModal = ({
   isOpen,
   onClose,
@@ -18,18 +19,19 @@ const BookingModal = ({
 }) => {
   const {
     handleSubmit,
-    control,
     register,
-    setValue,
     formState: { errors },
   } = useForm();
 
+  const navigate = useNavigate();
   const { data } = useGetProfileById();
+  const token = useTokenStore((state) => state.token);
 
-  const { mutate, err } = useSetBooking();
+  const { mutate, err, isSuccess } = useSetBooking();
 
-  const [socialNetwork, setSocialNetwork] = useState('');
-  const [nicknameOrNumber, setNicknameOrNumber] = useState('');
+  const [socialNetwork, setSocialNetwork] = useState("");
+  const [nicknameOrNumber, setNicknameOrNumber] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const handleSocialNetwork = (e) => {
     setSocialNetwork(e.value);
@@ -40,24 +42,28 @@ const BookingModal = ({
   };
 
   const submitHandler = (body) => {
-    console.log(startTime);
     const combinedString = `${socialNetwork}: ${nicknameOrNumber}`;
 
     const updateBody = {
       ...body,
       userId: data.userId,
-      startTime: startTime + ':00',
-      endTime: endTime + ':00',
+      startTime: startTime + ":00",
+      endTime: endTime + ":00",
       bookingDayOfWeek: dayOfWeek,
-      bookingDay: day + 'T17:00:38.725Z',
+      bookingDay: day + "T17:00:38.725Z",
       psychologistProfileId: psychologistProfileId,
       BookingPsychologistName: firstName,
       BookingPsychologistLastName: lastName,
       communicationMethod: combinedString,
     };
     mutate(updateBody);
-    console.log(updateBody);
-    // onClose();
+    if (isSuccess) {
+      setSuccess(true);
+    }
+    setTimeout(() => {
+      onClose();
+      setSuccess(false);
+    }, 2000);
   };
 
   return (
@@ -78,121 +84,116 @@ const BookingModal = ({
               X
             </button>
             <div className="bg-white border-2 border-green-pon p-4 w-full  rounded-lg ">
-              <form onSubmit={handleSubmit(submitHandler)}>
-                {/* Добавьте поля формы и используйте react-hook-form */}
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Имя
-                  </label>
-                  <Controller
-                    name="bookingClientName"
-                    control={control}
-                    shouldValidate={true}
-                    rules={{ required: 'Имя обязательно' }}
-                    render={({ field }) => (
+              {token ? (
+                !success ? (
+                  <form onSubmit={handleSubmit(submitHandler)}>
+                    {/* Добавьте поля формы и используйте react-hook-form */}
+                    <div className="mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Имя
+                      </label>
                       <input
-                        {...field}
                         type="text"
                         className="input-text"
                         placeholder="Введите ваше имя"
+                        {...register("bookingClientName")}
                         defaultValue={data.firstName}
+                        required={true}
                       />
-                    )}
-                  />
-                  {errors.bookingClientName && (
-                    <span className="text-red-500">
-                      {errors.bookingClientName.message}
-                    </span>
-                  )}
-                </div>
+                      {errors.bookingClientName && (
+                        <span className="text-red-500">
+                          {errors.bookingClientName.message}
+                        </span>
+                      )}
+                    </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Фамилия
-                  </label>
-                  <Controller
-                    name="bookingClientLastName"
-                    control={control}
-                    shouldValidate={true}
-                    rules={{ required: 'Фамилия обязательно' }}
-                    render={({ field }) => (
+                    <div className="mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Фамилия
+                      </label>
                       <input
-                        {...field}
                         type="text"
                         className="input-text"
                         placeholder="Введите вашу фамилию"
+                        {...register("bookingClientLastName")}
                         defaultValue={data.lastName}
+                        required={true}
                       />
-                    )}
-                  />
-                  {errors.bookingClientLastName && (
-                    <span className="text-red-500">
-                      {errors.bookingClientLastName.message}
-                    </span>
-                  )}
-                </div>
+                      {errors.bookingClientLastName && (
+                        <span className="text-red-500">
+                          {errors.bookingClientLastName.message}
+                        </span>
+                      )}
+                    </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Телефон
-                  </label>
-                  <Controller
-                    name="bookingClientPhone"
-                    control={control}
-                    shouldValidate={true}
-                    rules={{ required: 'Телефон обязательно' }}
-                    render={({ field }) => (
+                    <div className="mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Телефон
+                      </label>
+
                       <input
-                        {...field}
                         type="number"
                         className="input-text"
                         placeholder="Введите ваш телефон"
+                        {...register("bookingClientPhone")}
                         defaultValue={data.phone}
+                        required={true}
                       />
-                    )}
-                  />
-                  {errors.bookingClientPhone && (
-                    <span className="text-red-500">
-                      {errors.bookingClientPhone.message}
-                    </span>
-                  )}
-                </div>
+                      {errors.bookingClientPhone && (
+                        <span className="text-red-500">
+                          {errors.bookingClientPhone.message}
+                        </span>
+                      )}
+                    </div>
 
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">
-                    Способ связи
-                  </label>
-                  <div className="flex items-center">
-                    <Select
-                      options={socialOptions}
-                      isSearchable={false}
-                      defaultValue={socialOptions[0]}
-                      onChange={handleSocialNetwork}
-                    />
-                    <input
-                      type="text"
-                      onChange={handleNicknameOrNumber}
-                      placeholder="Введите ник или номер"
-                      className="input-text ml-2"
-                    />
-                  </div>
-                  {errors.communicationMethod && (
-                    <span className="text-red-500">
-                      {errors.communicationMethod.message}
-                    </span>
-                  )}
-                </div>
-                {/* Добавьте остальные поля формы по аналогии */}
+                    <div className="mb-4">
+                      <label className="block text-gray-700 text-sm font-bold mb-2">
+                        Способ связи
+                      </label>
+                      <div className="flex items-center">
+                        <Select
+                          options={socialOptions}
+                          isSearchable={false}
+                          defaultValue={socialOptions[0]}
+                          onChange={handleSocialNetwork}
+                        />
+                        <input
+                          type="text"
+                          onChange={handleNicknameOrNumber}
+                          placeholder="Введите ник или номер"
+                          className="input-text ml-2"
+                        />
+                      </div>
+                    </div>
+                    {/* Добавьте остальные поля формы по аналогии */}
 
+                    <div className="mt-6 text-center">
+                      <button
+                        type="submit"
+                        className="bg-white text-green-pon border-2 border-green-pon py-2 px-4 rounded hover:bg-green-pon hover:text-white duration-700 "
+                      >
+                        Забронировать
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  "Бронирование успешно завершено перейдите личный кабинет для просмотра всех ваших броней"
+                )
+              ) : (
                 <div className="mt-6 text-center">
+                  <p className="block text-gray-700 text-sm font-bold mb-2">
+                    Вы должны быть авторизованы для Бронирования сеанса
+                  </p>
                   <button
-                    type="submit"
+                    onClick={() => {
+                      navigate("/auth");
+                    }}
                     className="bg-white text-green-pon border-2 border-green-pon py-2 px-4 rounded hover:bg-green-pon hover:text-white duration-700 "
                   >
-                    Забронировать
+                    Регистрация/Вход
                   </button>
                 </div>
-              </form>
+              )}
             </div>
           </div>
         </div>

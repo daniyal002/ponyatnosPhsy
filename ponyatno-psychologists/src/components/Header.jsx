@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
+import { useRoleStore } from "../store/store";
+import useTokenStore from "../store/store";
 
 const MobileMenu = () => {
+  const role = useRoleStore((state) => state.role);
+  const clearToken = useTokenStore((state) => state.clearToken);
+  const clearRole = useRoleStore((state) => state.clearRole);
   const [open, setOpen] = useState(false);
 
   const generateMenuItems = (role) => {
@@ -11,39 +16,64 @@ const MobileMenu = () => {
         return [
           { link: "/", text: "Главная" },
           { link: "/business", text: "Бизнесу" },
+          { link: "/allpsychologist", text: "Психологи" },
           { link: "/otzyvy", text: "Отзывы" },
           { link: "/profile", text: "Личный кабинет" },
-          { link: "auth/login", text: "Выход" },
+          {
+            link: "auth/login",
+            text: "Выход",
+            onClick: () => {
+              clearToken();
+              clearRole();
+            },
+          },
         ];
 
       case "User":
         return [
           { link: "/", text: "Главная" },
           { link: "/business", text: "Бизнесу" },
+          { link: "/allpsychologist", text: "Психологи" },
           { link: "/otzyvy", text: "Отзывы" },
           { link: "/profile", text: "Личный кабинет" },
-          { link: "/auth/login", text: "Выход" },
+          {
+            link: "/auth/login",
+            text: "Выход",
+            onClick: () => {
+              clearToken();
+              clearRole();
+            },
+          },
         ];
       case "Psychologists":
         return [
           { link: "/", text: "Главная" },
           { link: "/business", text: "Бизнесу" },
+          { link: "/allpsychologist", text: "Психологи" },
           { link: "/otzyvy", text: "Отзывы" },
           { link: "/profile", text: "Личный кабинет" },
-          { link: "/auth/login", text: "Выход" },
+          {
+            link: "/auth/login",
+            text: "Выход",
+            onClick: () => {
+              clearToken();
+              clearRole();
+            },
+          },
         ];
 
       default:
         return [
           { link: "/", text: "Главная" },
           { link: "/business", text: "Бизнесу" },
+          { link: "/allpsychologist", text: "Психологи" },
           { link: "/otzyvy", text: "Отзывы" },
           { link: "/auth", text: "Регистрация/Вход" },
         ];
     }
   };
 
-  const userMenuItems = generateMenuItems("User");
+  var userMenuItems = generateMenuItems(role);
 
   return (
     <header className=" bg-white w-full overflow-hidden">
@@ -94,7 +124,7 @@ const MobileMenu = () => {
           <ul className="lg:flex space-x-4 gap-x-1">
             {userMenuItems &&
               userMenuItems.map((menu, index) => (
-                <Link to={menu.link} key={index}>
+                <Link to={menu.link} key={index} onClick={menu.onClick}>
                   {menu.text}
                 </Link>
               ))}

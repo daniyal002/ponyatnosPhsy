@@ -1,28 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useGetProfileById } from "../../hook/useGetProfileById";
-import ProfileDataUpdate from "./ProfileDataUpdate/ProfileDataUpdate";
 import Avatar from "../Avatar/Avatar";
+import ProfileDataOpenUpdate from "./ProfileDataOpenUpdate/ProfileDataOpenUpdate";
+import { useRoleStore } from "../../../../store/store";
 const ProfileData = () => {
   const { data } = useGetProfileById();
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
+  const role = useRoleStore((state) => state.role);
   return (
     <>
       {data && (
         <>
-          <ProfileDataUpdate
-            isModalOpen={isModalOpen}
-            setModalOpen={setModalOpen}
-            role={data.userRole}
-          />
           <div className="flex flex-col items-center w-[100%] bg-white">
             <div className="bg-[#004E64] w-full">
               <div className="flex flex-col items-center m-[40px] md:m-[100px] md:flex-row">
-                <Avatar />
+                <Avatar userId={data.userId} avatarImage={data.avatarImage} />
                 {data.userRole !== "User" && (
                   <p className="flex flex-col gap-y-5 w-full md:w-1/2">
                     <span className=" text-[32px] md:text-[48px] text-green-pon text-center">
@@ -131,17 +122,15 @@ const ProfileData = () => {
                     </p>
                     <p className="profile-text">
                       <span className="profile-textHeader">Место учебы</span>
-                      <span className="text-[16px]">{data.educationPlace}</span>
+                      <span className="text-[16px]">
+                        {data?.educationPlace?.$values.map((item, index) => (
+                          <p key={index}>{item}</p>
+                        ))}
+                      </span>
                     </p>
                   </div>
 
                   <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
-                    <p className="profile-text">
-                      <span className="profile-textHeader">Год выпуска</span>{" "}
-                      <span className="text-[16px]">
-                        {data.yearOfGraduation} год
-                      </span>
-                    </p>
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Время продолжительности одного сеанса
@@ -150,9 +139,7 @@ const ProfileData = () => {
                         {data.sessionDuration} минут
                       </span>
                     </p>
-                  </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Время перерыва между сеансом
@@ -161,15 +148,16 @@ const ProfileData = () => {
                         {data.breakDuration} минут
                       </span>
                     </p>
+                  </div>
+
+                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Цена за один сеанс
                       </span>
                       <span className="text-[16px]">{data.sessionPrice}₽</span>
                     </p>
-                  </div>
 
-                  <div className="flex gap-x-[60px] gap-y-[30px] w-[80%] justify-start md:w-1/2 flex-col xs:flex-row mx-3">
                     <p className="profile-text">
                       <span className="profile-textHeader">
                         Сколько дней до начала записи
@@ -187,24 +175,7 @@ const ProfileData = () => {
                 </>
               )}
             </div>
-
-            <div className="bg-black w-full ">
-              <div className="flex flex-col gap-y-5 items-center my-6 p-2">
-                <h3 className="text-[48px] text-center text-[#EAE0D5]">
-                  Изменение данных профиля
-                </h3>
-                <p className="text-[16px] text-[#EAE0D5] text-center">
-                  Нажмите на кнопку Редактировать профиль чтобы изменить ваши
-                  данные
-                </p>
-                <button
-                  onClick={openModal}
-                  className="bg-[#EAE0D5] p-4  rounded-lg text-black text-[14px] uppercase font-bold hover:bg-[#0da47c;] hover:text-white duration-700"
-                >
-                  Редактировать профиль
-                </button>
-              </div>
-            </div>
+            <ProfileDataOpenUpdate role={role} />
           </div>
         </>
       )}
